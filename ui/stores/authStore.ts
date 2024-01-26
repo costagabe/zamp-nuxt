@@ -1,33 +1,32 @@
 import type { ApiResponse } from "~/ui/types/ApiResponse";
 
 export const useAuthStore = defineStore(
-    "auth",
-    () => {
-        const authenticated = ref<boolean>(true);
-        const token = ref<string | null>(null);
+  "auth",
+  () => {
+    const authenticated = ref<boolean>(false);
+    const token = ref<string | null>(null);
 
-        async function authenticate(username: string, password: string) {
-            const { data, error } = await useApiFetch<any>("/auth", {
-                body: { username, password },
-                method: "POST",
-            });
+    async function authenticate(username: string, password: string) {
+      const { data, error } = await useFetch<any>("/api/auth", {
+        body: { username, password },
+        method: "POST",
+      });
 
-            if (error.value) {
-                authenticated.value = false;
-                return false;
-            }
+      if (error.value) {
+        authenticated.value = false;
+        return false;
+      }
 
-            authenticated.value = true;
-            token.value = data.value?.token;
+      authenticated.value = true;
 
-            return true;
-        }
+      return true;
+    }
 
-        return {
-            authenticated,
-            token,
-            authenticate,
-        };
-    },
-    { persist: true }
+    return {
+      authenticated,
+      token,
+      authenticate,
+    };
+  },
+  { persist: true }
 );
