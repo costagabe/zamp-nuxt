@@ -1,0 +1,14 @@
+export enum MenuEnum {
+    COMPANIES_MENU = "COMPANIES_MENU",
+    PARAMETERS_MENU = "PARAMETERS_MENU",
+    HOME_MENU = "HOME_MENU",
+    PROFILES_MENU = "PROFILES_MENU",
+    USERS_MENU = "USERS_MENU",
+    ACCOUNTS_MENU = "ACCOUNTS_MENU",
+}
+
+export enum MenuCategoryEnum {
+    GENERAL = "GENERAL",
+    SYSTEM = "SYSTEM",
+    CASH_BOOK = "CASH_BOOK",
+}
