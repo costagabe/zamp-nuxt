@@ -1,9 +1,7 @@
 <script setup lang="ts">
-definePageMeta({ layout: "default" });
+    definePageMeta({ layout: "default" });
 </script>
 
 <template>
-<div>
-helo world
-</div>
+    <div>helo world</div>
 </template>

@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
-    modules: ['@nuxtjs/tailwindcss', "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt",],
-    devtools: {enabled: true},
+    ssr: false,
+    modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
+    devtools: { enabled: true },
     components: {
         dirs: ["./ui/components"],
     },
@@ -12,6 +13,5 @@ export default defineNuxtConfig({
         assets: "./ui/assets",
         layouts: "./ui/layouts",
         plugins: "./ui/plugins",
-
     },
-})
+});
