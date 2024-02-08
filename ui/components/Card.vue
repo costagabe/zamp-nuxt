@@ -9,12 +9,17 @@
 <template>
   <div class="card w-full bg-base-100 shadow-xl">
     <div class="card-title bg-primary h-14 rounded-t pl-4">
-      <h2
+      <div
+        class="flex flex-1 align-middle justify-between"
         v-if="title"
-        class="text-primary-content"
       >
-        {{ title }}
-      </h2>
+        <h2 class="text-primary-content">
+          {{ title }}
+        </h2>
+        <div>
+          <button class="btn btn-primary">Adicionar</button>
+        </div>
+      </div>
       <slot
         v-else
         name="title"

@@ -11,8 +11,6 @@
     { title: "Situação", key: "situation" },
   ];
 
-  const userPage = ref<Page<ReadUserDTO>>({ content: [] });
-
   const route = useRoute();
 
   const paginationQuery = computed(() => ({
@@ -20,33 +18,21 @@
     size: route.query.size ?? 10,
   }));
 
-  const { data, error } = useAsyncData("users", () => $fetch<Page<ReadUserDTO>>("/api/users", { query: paginationQuery.value }), {
+  const { data: userPage } = useAsyncData("users", () => $fetch<Page<ReadUserDTO>>("/api/users", { query: paginationQuery.value }), {
     watch: [paginationQuery],
+    default: () =>
+      ({
+        content: [],
+        pagination: undefined,
+      }) as Page<ReadUserDTO>,
   });
-
-  watch(data, (value) => {
-    if (value) {
-      Object.assign(userPage.value, value);
-    }
-  });
-  // const { data, error } = await useAsyncData(
-  //   "users",
-  //   () => $fetch<Page<ReadUserDTO>>("http://localhost:8080/users", { query: paginationQuery.value }),
-  //   {
-  //     watch: [paginationQuery],
-  //   }
-  // );
-  // watch(paginationQuery, (v) => {
-  //   console.log(v);
-  //   refresh();
-  // });
 </script>
 
 <template>
   <div class="container mx-auto w-10/12">
     <card title="Usuários">
       <data-table
-        :data="userPage.content ?? []"
+        :data="userPage.content"
         :columns="cols"
         v-model:pagination="userPage.pagination"
       />

@@ -11,17 +11,16 @@
       <h2 :class="'menu-title'">{{ category }}</h2>
       <ul v-for="menu in menus[category]">
         <li>
-          <div>
+          <NuxtLink
+            :href="menu!.path"
+            active-class="active"
+          >
             <component
-              :is="menu?.icon"
+              :is="menu!.icon"
               class="h-6 w-6"
             />
-            <NuxtLink
-              :href="menu?.path"
-              active-class="active"
-              >{{ menu?.title }}
-            </NuxtLink>
-          </div>
+            {{ menu?.title }}
+          </NuxtLink>
         </li>
       </ul>
     </li>

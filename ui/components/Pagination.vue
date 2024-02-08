@@ -2,7 +2,7 @@
   import type { Pagination } from "~/ui/types/PaginationTypes";
 
   type PaginationProps = {
-    pagination?: Pagination;
+    pagination?: Pagination | null;
   };
   const props = withDefaults(defineProps<PaginationProps>(), {
     pagination: {
