@@ -1,32 +1,46 @@
-import type { ApiResponse } from "~/ui/types/ApiResponse";
+export const useAuthStore = defineStore("auth", () => {
+  const authenticated = ref<boolean>(false);
+  const token = ref<string | null>(null);
 
-export const useAuthStore = defineStore(
-  "auth",
-  () => {
-    const authenticated = ref<boolean>(false);
-    const token = ref<string | null>(null);
+  const errors = ref({
+    username: "",
+    password: "",
+  });
 
-    async function authenticate(username: string, password: string) {
-      const { data, error } = await useFetch<any>("/api/auth", {
-        body: { username, password },
-        method: "POST",
-      });
+  const form = ref({
+    username: "admin",
+    password: "admin",
+  });
 
-      if (error.value) {
-        authenticated.value = false;
-        return false;
+  async function authenticate(username: string, password: string) {
+    const { error } = await useFetch<any>("/api/auth", {
+      body: { username, password },
+      method: "POST",
+    });
+
+    if (error.value) {
+      console.log("error", error.value);
+      if (error.value.statusCode === 500) {
+        errors.value.username = "Erro interno do servidor";
+        errors.value.password = "Erro interno do servidor";
+      } else if (error.value.statusCode === 401) {
+        errors.value.username = "Usuário não encontrado";
+        errors.value.password = "Senha inválida";
       }
-
-      authenticated.value = true;
-
-      return true;
+      authenticated.value = false;
+      return false;
     }
 
-    return {
-      authenticated,
-      token,
-      authenticate,
-    };
-  },
-  { persist: true }
-);
+    authenticated.value = true;
+
+    return true;
+  }
+
+  return {
+    authenticated,
+    token,
+    errors,
+    form,
+    authenticate,
+  };
+});

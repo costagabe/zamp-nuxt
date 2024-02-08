@@ -4,30 +4,21 @@
   definePageMeta({ layout: "auth", title: "Login" });
 
   const authStore = useAuthStore();
+  const { errors, form } = storeToRefs(authStore);
   const layoutStore = useLayoutStore();
   onMounted(() => {
     layoutStore.title = "Login";
   });
 
-  const form = ref({
-    username: "admin",
-    password: "admin",
-  });
-
-  const errors = reactive({
-    username: "",
-    password: "",
-  });
-
   watch(
     () => form.value.username,
-    (value, oldValue) => {
-      errors.username = "";
+    () => {
+      errors.value.username = "";
     }
   );
   watch(
     () => form.value.password,
-    () => (errors.password = "")
+    () => (errors.value.password = "")
   );
 
   const router = useRouter();
@@ -36,8 +27,7 @@
     const isAuthSuccessfull = await authStore.authenticate(form.value.username, form.value.password);
 
     if (!isAuthSuccessfull) {
-      errors.username = "Usuário não encontrado";
-      errors.password = "Senha inválida";
+      return;
     }
     await router.push("/");
   }
