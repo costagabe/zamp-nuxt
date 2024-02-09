@@ -30,6 +30,9 @@
 
 <template>
   <div class="container mx-auto w-10/12">
+    <u-card>
+      
+    </u-card>
     <card title="Usuários">
       <data-table
         :data="userPage.content"

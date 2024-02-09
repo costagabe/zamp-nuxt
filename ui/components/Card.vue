@@ -8,16 +8,16 @@
 
 <template>
   <div class="card w-full bg-base-100 shadow-xl">
-    <div class="card-title bg-primary h-14 rounded-t pl-4">
+    <div class="card-title bg-primary h-14 rounded-t px-4 py-4">
       <div
         class="flex flex-1 align-middle justify-between"
         v-if="title"
       >
-        <h2 class="text-primary-content">
+        <p class="text-contrast align-bottom">
           {{ title }}
-        </h2>
+        </p>
         <div>
-          <button class="btn btn-primary">Adicionar</button>
+          <Button>Adicionar</Button>
         </div>
       </div>
       <slot
