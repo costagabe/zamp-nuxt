@@ -1,10 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  plugins: [require("daisyui")],
-  daisyui: {
-    prefix: "",
-  },
-  content: [],
+import type { Config } from 'tailwindcss'
+import defaultTheme from 'tailwindcss/defaultTheme'
+
+export default <Partial<Config>>{
   theme: {
     extend: {
       colors: {
@@ -14,6 +11,6 @@ export default {
         "contrast-secondary": "#948770",
         accent: "#F1EB90",
       },
-    },
-  },
-};
+    }
+  }
+}

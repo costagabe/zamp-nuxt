@@ -1,23 +1,17 @@
 <template>
-    <div class="drawer drawer-open">
-        <input
-            id="zamp-drawer"
-            type="checkbox"
-            class="drawer-toggle"
-        />
-        <div class="drawer-content p-4">
-            <slot />
-        </div>
-        <div class="drawer-side">
-            <label
-                for="zamp-drawer"
-                aria-label="close sidebar"
-                class="drawer-overlay"
-            ></label>
-            <menus />
-        </div>
+  <div class="flex">
+    <div class="mt-2 flex">
+      <u-vertical-navigation :links="menus" />
     </div>
+    <div class="flex flex-1 py-16">
+      <slot />
+    </div>
+  </div>
 </template>
 <script setup lang="ts">
-    import Menus from "~/ui/components/Menus.vue";
+  import type { MenuCategoryEnum } from "~/ui/enum/MenuEnum";
+
+  const { menus } = storeToRefs(useUserStore());
+
+  const categories = computed<Array<MenuCategoryEnum>>(() => Object.keys(menus.value) as Array<MenuCategoryEnum>);
 </script>

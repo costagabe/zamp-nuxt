@@ -2,13 +2,12 @@
   import type { TableColumn } from "~/ui/types/DataTableTypes";
   import DataTable from "~/ui/components/DataTable.vue";
   import type { Page } from "~/ui/types/PaginationTypes";
-  import type { ReadUserDTO } from "~/ui/types/User";
   import { useAsyncData } from "#app";
 
-  const cols: Array<TableColumn<ReadUserDTO>> = [
-    { title: "Nome", key: "name" },
-    { title: "Sobrenome", key: "email" },
-    { title: "Situação", key: "situation" },
+  const cols: Array<TableColumn> = [
+    { label: "Nome", key: "name" },
+    { label: "Sobrenome", key: "email" },
+    { label: "Situação", key: "situation" },
   ];
 
   const route = useRoute();
@@ -31,14 +30,20 @@
 <template>
   <div class="container mx-auto w-10/12">
     <u-card>
-      
+      <template #header>
+        <div class="flex flex-1 align-middle justify-between">
+          <p class="text-contrast align-bottom">Usuários</p>
+          <u-button>Adicionar</u-button>
+        </div>
+      </template>
+
+      <template #default>
+        <data-table
+          :data="userPage.content"
+          :columns="cols"
+          v-model:pagination="userPage.pagination"
+        />
+      </template>
     </u-card>
-    <card title="Usuários">
-      <data-table
-        :data="userPage.content"
-        :columns="cols"
-        v-model:pagination="userPage.pagination"
-      />
-    </card>
   </div>
 </template>

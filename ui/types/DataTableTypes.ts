@@ -1,5 +1,8 @@
-export type TableColumn<T> = {
-  title: string;
-  key: keyof T;
-  class?: string;
+export type TableColumn = {
+  [key: string]: any;
+  key: string;
+  sortable?: boolean | undefined;
+  sort?: ((a: any, b: any, direction: 'asc' | 'desc') => number) | undefined;
+  direction?: "asc" | "desc" | undefined;
+  class?: string | undefined;
 };

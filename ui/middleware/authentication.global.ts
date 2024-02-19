@@ -3,7 +3,7 @@ const publicRoutes = ["/login", "/register"];
 export default defineNuxtRouteMiddleware((to, from) => {
   const { authenticated } = storeToRefs(useAuthStore());
 
-  $fetch("/api/auth", {method: "GET"}).catch(() => {
+  $fetch("/api/auth", { method: "GET" }).catch(() => {
     authenticated.value = false;
   });
 

@@ -6,7 +6,7 @@ export const useUserStore = defineStore("user", () => {
 
   const { data: menusArray } = useFetch<Array<MenuEnum>>("/api/users/menus", { default: () => [] });
 
-  const menus = computed<Partial<MenuStructure>>(() => generateMenuStructure(menusArray.value));
+  const menus = computed<Array<any>>(() => generateMenuStructure(menusArray.value));
 
   return {
     menus,

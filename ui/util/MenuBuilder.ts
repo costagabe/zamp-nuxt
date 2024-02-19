@@ -2,9 +2,9 @@ import { MenuCategoryEnum, MenuEnum } from "../enum/MenuEnum";
 import { AdjustmentsHorizontalIcon, BriefcaseIcon, HomeIcon, UserCircleIcon, UserIcon, WalletIcon } from "@heroicons/vue/24/solid";
 
 export type MenuProps = {
-  path: string;
-  icon: Component;
-  title: string;
+  to: string;
+  icon: string;
+  label: string;
 };
 
 export type MenuStructure = Record<MenuCategoryEnum, Partial<Record<MenuEnum, MenuProps>>>;
@@ -12,38 +12,38 @@ export type MenuStructure = Record<MenuCategoryEnum, Partial<Record<MenuEnum, Me
 export const menuStructure: Record<MenuCategoryEnum, Partial<Record<MenuEnum, MenuProps>>> = {
   [MenuCategoryEnum.GENERAL]: {
     [MenuEnum.HOME_MENU]: {
-      path: "/",
-      icon: HomeIcon,
-      title: "Home",
+      to: "/",
+      icon: "i-heroicons-home",
+      label: "Home",
     },
   },
   [MenuCategoryEnum.SYSTEM]: {
     [MenuEnum.COMPANIES_MENU]: {
-      path: "/companies",
-      icon: BriefcaseIcon,
-      title: "Empresas",
+      to: "/companies",
+      icon: "i-heroicons-briefcase",
+      label: "Empresas",
     },
     [MenuEnum.PROFILES_MENU]: {
-      path: "/profiles",
-      icon: UserCircleIcon,
-      title: "Perfis de Usuário",
+      to: "/profiles",
+      icon: "i-heroicons-user-circle",
+      label: "Perfis de Usuário",
     },
     [MenuEnum.USERS_MENU]: {
-      path: "/users",
-      icon: UserIcon,
-      title: "Usuários",
+      to: "/users",
+      icon: "i-heroicons-user",
+      label: "Usuários",
     },
     [MenuEnum.PARAMETERS_MENU]: {
-      path: "/parameters",
-      icon: AdjustmentsHorizontalIcon,
-      title: "Parâmetros",
+      to: "/parameters",
+      icon: "i-heroicons-adjustments-horizontal",
+      label: "Parâmetros",
     },
   },
   [MenuCategoryEnum.CASH_BOOK]: {
     [MenuEnum.ACCOUNTS_MENU]: {
-      path: "/accounts",
-      icon: WalletIcon,
-      title: "Contas",
+      to: "/accounts",
+      icon: "i-heroicons-wallet",
+      label: "Contas",
     },
   },
 };
@@ -58,6 +58,7 @@ const menuMap: Record<MenuEnum, MenuCategoryEnum> = {
 };
 
 export function generateMenuStructure(userMenus: Array<MenuEnum>) {
+
   const menuStructureResponse: Record<MenuCategoryEnum, Partial<Record<MenuEnum, MenuProps>>> = {
     [MenuCategoryEnum.GENERAL]: {},
     [MenuCategoryEnum.SYSTEM]: {},
@@ -70,5 +71,9 @@ export function generateMenuStructure(userMenus: Array<MenuEnum>) {
     }
   });
 
-  return menuStructureResponse;
+console.log(menuStructureResponse);
+
+console.log();
+
+  return Object.keys(menuStructureResponse).map((key) => ([...Object.keys(menuStructureResponse[key]).map(key2 => menuStructureResponse[key][key2])]));
 }
