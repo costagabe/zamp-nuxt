@@ -44,8 +44,8 @@
 
   const validate = (state: typeof formState.value): FormError[] => {
     const errors = [];
-    if (!state.username) errors.push({ path: "username", message: "Required" });
-    if (!state.password) errors.push({ path: "password", message: "Required" });
+    if (!state.username) errors.push({ path: "username", message: "Campo Obrigatório" });
+    if (!state.password) errors.push({ path: "password", message: "Campo Obrigatório" });
     console.log(errors);
 
     return errors;
@@ -53,7 +53,7 @@
 </script>
 
 <template>
-  <UForm
+  <u-form
     :validate="validate"
     :state="formState"
     :validate-on="['submit']"
@@ -61,26 +61,26 @@
     class="space-y-4"
     ref="form"
   >
-    <UFormGroup
+    <u-form-group
       label="Email"
       name="username"
     >
-      <UInput
+      <u-input
         v-model="formState.username"
         :loading="loading"
       />
-    </UFormGroup>
+    </u-form-group>
 
-    <UFormGroup
+    <u-form-group
       label="Password"
       name="password"
     >
-      <UInput
+      <u-input
         v-model="formState.password"
         :loading="loading"
         type="password"
       />
-    </UFormGroup>
+    </u-form-group>
     <div>
       <div class="grid grid-rows-2 gap-4">
         <u-button
@@ -91,13 +91,13 @@
         >
           Entrar
         </u-button>
-        <NuxtLink
+        <nuxt-link
           href="/forgot-password"
           class="text-md text-gray-500 hover:text-blue-500"
         >
           Esqueceu a senha?
-        </NuxtLink>
+        </nuxt-link>
       </div>
     </div>
-  </UForm>
+  </u-form>
 </template>

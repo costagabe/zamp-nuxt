@@ -6,8 +6,9 @@
 
   const cols: Array<TableColumn> = [
     { label: "Nome", key: "name" },
-    { label: "Sobrenome", key: "email" },
-    { label: "Situação", key: "situation" },
+    { label: "Email", key: "email" },
+    { label: "Situação", key: "situation", class:"text-center" },
+    
   ];
 
   const route = useRoute();
@@ -32,8 +33,8 @@
     <u-card>
       <template #header>
         <div class="flex flex-1 align-middle justify-between">
-          <p class="text-contrast align-bottom">Usuários</p>
-          <u-button>Adicionar</u-button>
+          <p class="text-white align-bottom">Usuários</p>
+          <u-button :to="{name: 'CreateUser'}">Adicionar</u-button>
         </div>
       </template>
 
@@ -42,7 +43,19 @@
           :data="userPage.content"
           :columns="cols"
           v-model:pagination="userPage.pagination"
-        />
+        >
+          <template #situation-data="{ row }">
+            <div class="flex justify-center">
+              <u-badge
+              :color="row.situation === 'ACTIVE' ? 'emerald' : 'red'"
+              :label="row.situation === 'ACTIVE' ? 'Ativo' : 'Inativo'"
+              variant="subtle"
+            >
+              {{ row.situation === 'ACTIVE' ? 'Ativo' : 'Inativo' }}
+            </u-badge>
+            </div>
+          </template>
+        </data-table>
       </template>
     </u-card>
   </div>
