@@ -18,7 +18,16 @@ export default defineNuxtConfig({
     dirs: ["./ui/components"],
   },
   imports: {
-    dirs: ["./ui/composables", "./ui/stores", "./server/connections", "./ui/util", "./ui/enum", "./ui/types", "./ui/validators", "./ui/services"],
+    dirs: [
+      "./ui/composables",
+      "./ui/stores",
+      "./server/connections",
+      "./ui/util",
+      "./ui/enum",
+      "./ui/types",
+      "./ui/validators",
+      "./ui/services",
+    ],
   },
   dir: {
     pages: "./ui/pages",

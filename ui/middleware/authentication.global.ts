@@ -3,6 +3,8 @@ const publicRoutes = ["/login", "/register"];
 export default defineNuxtRouteMiddleware((to, from) => {
   const { authenticated } = storeToRefs(useAuthStore());
 
+  if(to.path === from.path) return;
+
   $fetch("/api/auth", { method: "GET" }).catch(() => {
     authenticated.value = false;
   });
@@ -17,11 +19,4 @@ export default defineNuxtRouteMiddleware((to, from) => {
       return navigateTo("/login");
     }
   }
-
-  // In a real app you would probably not redirect every route to `/`
-  // however it is important to check `to.path` before redirecting or you
-  // might get an infinite redirect loop
-  // if (to.path !== '/') {
-  //   return navigateTo('/')
-  // }
 });

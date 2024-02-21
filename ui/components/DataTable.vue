@@ -4,8 +4,10 @@
   type TableProps = {
     columns: TableColumn[];
     data: Array<T>;
+    updateRoute: string;
   };
 
+  const router = useRouter();
   const props = defineProps<TableProps>();
 
   const cols = computed(() => [...props.columns, { label: "Ações", key: "id", class: "w-[80px]" }]);
@@ -17,7 +19,7 @@
       {
         label: "Editar",
         icon: "i-heroicons-pencil-square-20-solid",
-        click: () => console.log("Edit", row.id),
+        click: () => router.push({ name: props.updateRoute, params: { id: row.id } }),
       },
       {
         label: "Duplicar",

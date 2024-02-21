@@ -1,10 +1,10 @@
 <template>
-  <div class="flex">
-    <div class="pt-2 flex border-r-2 h-screen">
+  <div class="flex bg-harvest-gold-400">
+    <div class="pt-2 flex border-r-2 h-screen" v-if="menus.length">
       <u-vertical-navigation :links="menus" />
     </div>
     <div class="flex flex-1 py-16">
-      <div class="container flex mx-auto flex-shrink flex-col ">
+      <div class="container flex flex-shrink flex-col ">
         <div class="flex flex-col items-center">
           <slot />
         </div>
