@@ -6,8 +6,8 @@
   const cols: Array<TableColumn> = [
     { label: "Nome", key: "name" },
     { label: "Código", key: "code" },
-    { label: "Tipo", key: "type" },
-    { label: "Balanço", key: "balance" },
+    { label: "Tipo", key: "type", class: "text-center" },
+    { label: "Balanço (R$)", key: "balance" },
   ];
 
   const router = useRouter();
@@ -17,6 +17,7 @@
       label: "Lançamentos",
       icon: "i-heroicons-document-chart-bar",
       click: (row: AccountDTO) => router.push({ name: "Entries", params: { id: row.id } }),
+      show: (row: AccountDTO) => row.type === "FINANCIAL_ACCOUNT",
     },
   ];
 </script>

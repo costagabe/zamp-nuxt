@@ -11,11 +11,12 @@
     backRoute: string;
     schema: ObjectSchema<any>;
     defaultUpdateValue: T;
+    idRouteName?: string;
   };
 
   const [state] = defineModel<T>("state", { default: {} as T });
 
-  const props = defineProps<CreateAndUpdateProps>();
+  const props = withDefaults(defineProps<CreateAndUpdateProps>(), { idRouteName: "id" });
   const emit = defineEmits<{ (e: "submit"): void }>();
 
   const toast = useToast();
@@ -26,7 +27,7 @@
 
   const { loading } = storeToRefs(useAppStore());
 
-  const id = computed(() => route.params.id);
+  const id = computed(() => route.params[props.idRouteName] as string);
 
   const { data, error } = useAsyncData(
     `${props.name}UpdateData`,
@@ -50,7 +51,6 @@
   });
   async function onSubmitCreate(event: FormSubmitEvent<K>) {
     try {
-      
       loading.value = true;
 
       await $fetch(`/api/${props.apiRoute}`, {
