@@ -1,15 +1,16 @@
 import type { mergeProps } from 'vue';
 <script setup lang="ts">
-  const props = defineProps<{
+  defineProps<{
     loading: boolean;
-    userProfileList: SelectOption[];
   }>();
 
   const [profiles] = defineModel<Array<string>>("profiles", { default: [] });
+  const [userProfileList] = defineModel<SelectOption[]>("userProfileList", { default: [] as SelectOption[] });
 
-  const selectedProfiles = computed(() =>
-    profiles.value.map((id) => props.userProfileList.find((p) => p.value === id)!.label)
+  const selectedProfilesLabel = computed(() =>
+    profiles.value.map((id) => userProfileList.value.find((p) => p.value === id)?.label).join(", ")
   );
+
 </script>
 
 <template>
@@ -17,20 +18,20 @@ import type { mergeProps } from 'vue';
     v-model="profiles"
     :loading="loading"
     :options="userProfileList"
-    :search-attributes="['label']"
+    searchable
     multiple
     option-attribute="label"
     value-attribute="value"
     placeholder="Perfis de Usuário"
-    searchable
     searchable-placeholder="Procurar perfil"
   >
     <template #label>
       <span
         v-if="profiles.length"
         class="truncate"
-        >{{ selectedProfiles.join(", ") }}</span
       >
+        {{ selectedProfilesLabel }}
+      </span>
       <span v-else>Selecionar Perfis</span>
     </template>
   </u-select-menu>
