@@ -1,16 +1,17 @@
 <script setup lang="ts">
   import { number, object, string } from "yup";
-  import type { AccountDTO } from "~/ui/types/Account";
 
-  type CreateEntryProps = AccountDTO;
+  type CreateEntryProps = EntryDTO;
 
   definePageMeta({ name: "CreateEntry" });
 
   const defaultState: CreateEntryProps = {
-    name: "",
-    code: "",
-    type: "INCOME_ACCOUNT",
-    balance: 0,
+    history: "",
+    date: "",
+    type: "IN",
+    value: 0,
+    finnantialAccount: "",
+    classificationAccount: "",
   };
 
   const state = ref<CreateEntryProps>({ ...defaultState });
@@ -18,12 +19,10 @@
   const { loading } = storeToRefs(useAppStore());
 
   const schema = object<CreateEntryProps>().shape({
-    name: string().trim().required("Campo Obrigatório"),
-    code: string().trim().required("Campo Obrigatório"),
-    type: string()
-      .oneOf(["INCOME_ACCOUNT", "EXPENSE_ACCOUNT", "FINANCIAL_ACCOUNT"])
-      .required("Campo Obrigatório"),
-    balance: number().required("Campo Obrigatório"),
+    history: string().trim(),
+    type: string().oneOf(["IN", "OUT"]).required("Campo Obrigatório"),
+    value: number().required("Campo Obrigatório"),
+    classificationAccount: string().trim().required("Campo Obrigatório"),
   });
 </script>
 
@@ -35,9 +34,10 @@
     :schema="schema"
     :title="`Criar Lançamento de  Conta`"
     :api-route="`accounts/${$route.params.id}/entries`"
-    name="Entries"
     backRoute="Entries"
+    id-route-name="entryId"
+    name="Entries"
   >
-    entries...
+    <accounts-entries-form v-model:state="state" />
   </crud-create-and-update>
 </template>

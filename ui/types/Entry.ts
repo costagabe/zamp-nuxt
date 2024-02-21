@@ -1,9 +1,11 @@
-export type EntryType = "IN" | "OUT" ;
+export type EntryType = "IN" | "OUT" | "TRANSFER";
 
 export type EntryDTO = {
   id?: string;
-  name: string;
-  code: string;
   type: EntryType;
-  balance: number;
+  value: number;
+  date: string;
+  history: string;
+  finnantialAccount: string;
+  classificationAccount: string;
 };

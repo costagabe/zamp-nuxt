@@ -23,13 +23,7 @@
     create-route="CreateEntry"
   >
     <template #type-data="{ row }">
-      <u-badge
-        :color="row.type === 'IN' ? 'emerald' : 'red'"
-        :label="row.type === 'IN' ? 'Entrada' : 'Saída'"
-        variant="subtle"
-      >
-        {{ row.type === "IN" ? "Entrada" : "Saída" }}
-      </u-badge>
+     <accounts-entries-badge :type="row.type"/>
     </template>
   </crud-list>
 </template>
