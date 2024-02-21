@@ -19,8 +19,6 @@
     profileIds: array().of(string().uuid("Campo inválido")).required("Campo Obrigatório"),
   });
 
-  type Schema = InferType<typeof schema>;
-
   const toast = useToast();
 
   const { data: userProfileList, status } = useAsyncData(
@@ -41,14 +39,15 @@
 
   const loading = ref(false);
 
-  watch(status, (status) => {
-    loading.value = status === "pending";
+  watch(status, (value) => {
+    loading.value = value === "pending";
   });
 
   async function onSubmit(event: FormSubmitEvent<CreateUserForm>) {
     try {
       loading.value = true;
-      const user = await $fetch("/api/users", {
+      
+      await $fetch("/api/users", {
         method: "POST",
         body: event.data,
       });
@@ -114,17 +113,11 @@
           label="Perfil"
           name="profileIds"
         >
-          <u-select-menu
-            v-model="state.profileIds"
+          <user-profiles-select
+            :state="state"
             :loading="loading"
-            :options="userProfileList"
-            :search-attributes="['label']"
-            multiple
-            option-attribute="label"
-            value-attribute="value"
-            placeholder="Perfil do Usuário"
-            searchable
-            searchable-placeholder="Procurar perfil"
+            :userProfileList="userProfileList"
+            v-model:profiles="state.profileIds"
           />
         </u-form-group>
         <u-button

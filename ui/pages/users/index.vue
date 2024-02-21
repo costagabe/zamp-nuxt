@@ -9,6 +9,7 @@
   const cols: Array<TableColumn> = [
     { label: "Nome", key: "name" },
     { label: "Email", key: "email" },
+    { label: "Perfil", key: "profile" },
     { label: "Situação", key: "situation", class: "text-center" },
   ];
 
@@ -18,10 +19,6 @@
     page: route.query.page ?? "0",
     size: route.query.size ?? "10",
   }));
-
-  watch(paginationQuery, (v, oldV) => {
-    console.log(v, oldV);
-  });
 
   const { data: userPage } = useAsyncData(
     "users",

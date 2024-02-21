@@ -12,15 +12,15 @@
     name: string;
     email: string;
     profileIds: Array<string>;
+    situation: "ACTIVE" | "INACTIVE";
   };
 
   const schema = object<UpdateUserForm>().shape({
     name: string().trim().min(5, "Preencha o nome completo").required("Campo Obrigatório"),
     email: string().email("Email inválido").required("Campo Obrigatório"),
     profileIds: array().of(string().uuid("Campo inválido")).required("Campo Obrigatório"),
+    situation: string().oneOf(["ACTIVE", "INACTIVE"], "Situação inválida").required("Campo Obrigatório"),
   });
-
-  type Schema = InferType<typeof schema>;
 
   const toast = useToast();
 
@@ -32,12 +32,24 @@
     }
   );
 
-  const statee = ref<UpdateUserForm>({
+  const state = ref<UpdateUserForm>({
     id: "",
     name: "",
     email: "",
     profileIds: [],
+    situation: "INACTIVE",
   });
+
+  const situation = computed({
+    get() {
+      return state.value.situation === "ACTIVE";
+    },
+    set(value: boolean) {
+      state.value.situation = value ? "ACTIVE" : "INACTIVE";
+    },
+  });
+
+  const situationLabel = computed(() => (situation.value ? "Situação: Ativo" : "Situação: Inativo"));
 
   const form = ref();
 
@@ -51,15 +63,20 @@
     loading.value = status === "pending";
   });
 
-  const { data: state, error } = useAsyncData(
+  const { data, error } = useAsyncData(
     "userUpdateData",
     () => $fetch<UpdateUserForm>(`/api/users/${id.value}`),
-    { default: () => ({ id: "", name: "", email: "", profileIds: [] }) }
+    { default: () => ({ id: "", name: "", email: "", profileIds: [], situation: "INACTIVE" as any }) }
   );
+
+  watch(data, (value) => {
+    state.value = value;
+  });
 
   watch(error, (value) => {
     if (value?.data) {
       const data = value.data as ApiError;
+
       toast.add({
         title: data.title,
         color: "red",
@@ -80,11 +97,9 @@
         title: "Usuário alterado com sucesso",
         color: "emerald",
       });
-      
     } catch (e) {
       const error = e as FetchError<ApiError>;
       form.value.setErrors(getValidationsFromApiError(error));
-      
     } finally {
       loading.value = false;
     }
@@ -95,7 +110,7 @@
   <u-card class="w-10/12">
     <template #header>
       <div class="flex flex-1 align-middle justify-between">
-        <p class="text-white align-bottom">Novo Usuário</p>
+        <p class="text-white align-bottom">Alterar Usuário - {{ state.name }}</p>
         <u-button :to="{ name: 'Users' }">Voltar</u-button>
       </div>
     </template>
@@ -109,15 +124,32 @@
         class="space-y-4"
         ref="form"
       >
-        <u-form-group
-          label="Nome Completo"
-          name="name"
-        >
-          <u-input
-            v-model="state.name"
-            :loading="loading"
-          />
-        </u-form-group>
+        <div class="flex flex-1 justify-between gap-8">
+          <div class="flex flex-1 ">
+            <u-form-group
+            class="w-full "
+              label="Nome Completo"
+              name="name"
+            >
+              <u-input
+                v-model="state.name"
+                :loading="loading"
+              />
+            </u-form-group>
+          </div>
+          <div class="w-32 flex">
+            <u-form-group
+              :label="situationLabel"
+              class="flex flex-col justify-between"
+              name="situation"
+            >
+              <u-toggle
+                v-model="situation"
+                :loading="loading"
+              />
+            </u-form-group>
+          </div>
+        </div>
 
         <u-form-group
           label="E-mail"
@@ -133,17 +165,11 @@
           label="Perfil"
           name="profileIds"
         >
-          <u-select-menu
-            v-model="state.profileIds"
+          <user-profiles-select
+            :state="state"
             :loading="loading"
-            :options="userProfileList"
-            :search-attributes="['label']"
-            multiple
-            option-attribute="label"
-            value-attribute="value"
-            placeholder="Perfil do Usuário"
-            searchable
-            searchable-placeholder="Procurar perfil"
+            :userProfileList="userProfileList"
+            v-model:profiles="state.profileIds"
           />
         </u-form-group>
         <u-button
