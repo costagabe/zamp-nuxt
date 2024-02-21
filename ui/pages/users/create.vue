@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import { array, object, string } from "yup";
-import { useUserProfileStore } from "~/ui/stores/userProfileStore";
 
   type CreateUserForm = {
     name: string;
@@ -22,20 +21,13 @@ import { useUserProfileStore } from "~/ui/stores/userProfileStore";
 
   const { loading } = storeToRefs(useAppStore());
 
-  const { data: userProfileList, status } = useAsyncData(
-    "userProfileSelectList",
-    () => $fetch<Array<SelectOption>>("/api/user-profiles/select-list"),
-    {
-      default: () => [] as Array<SelectOption>,
-    }
-  );
+  const { userProfileList } = useUserProfileSelectList();
 
   const schema = object<CreateUserForm>().shape({
     name: string().trim().min(5, "Preencha o nome completo").required("Campo Obrigatório"),
     email: string().email("Email inválido").required("Campo Obrigatório"),
     profileIds: array().of(string().uuid("Campo inválido")).required("Campo Obrigatório"),
   });
-
 </script>
 
 <template>

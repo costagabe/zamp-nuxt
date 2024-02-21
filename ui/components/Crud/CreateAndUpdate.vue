@@ -10,7 +10,6 @@
     title: string;
     backRoute: string;
     schema: ObjectSchema<any>;
-    loading: boolean;
     defaultUpdateValue: T;
   };
 

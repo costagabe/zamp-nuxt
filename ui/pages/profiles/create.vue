@@ -15,8 +15,6 @@
 
   const state = ref<CreateUserForm>({ ...defaultState });
 
-  const { updates } = storeToRefs(useUserProfileStore());
-
   const { loading } = storeToRefs(useAppStore());
 
   const { level } = storeToRefs(useAuthStore());
@@ -28,9 +26,6 @@
       .required("Campo Obrigatório"),
   });
 
-  function handleSubmit() {
-    updates.value++;
-  }
 </script>
 
 <template>
@@ -40,7 +35,6 @@
     :loading="loading"
     :schema="schema"
     :title="`Criar Perfil`"
-    @submit="handleSubmit"
     api-route="user-profiles"
     name="UserProfiles"
     backRoute="UserProfiles"

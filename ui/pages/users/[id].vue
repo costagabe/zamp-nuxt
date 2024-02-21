@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import { array, object, string } from "yup";
-  import { useUserProfileStore } from "~/ui/stores/userProfileStore";
 
   type UpdateUserForm = {
     id: string;
@@ -42,13 +41,7 @@
 
   const { loading } = storeToRefs(useAppStore());
 
-  const { data: userProfileList, status } = useAsyncData(
-    "userProfileSelectList",
-    () => $fetch<Array<SelectOption>>("/api/user-profiles/select-list"),
-    {
-      default: () => [] as Array<SelectOption>,
-    }
-  );
+  const { userProfileList } = useUserProfileSelectList();
 
   const schema = object<UpdateUserForm>().shape({
     name: string().trim().min(5, "Preencha o nome completo").required("Campo Obrigatório"),
@@ -62,12 +55,11 @@
   <crud-create-and-update
     v-model:state="state"
     :default-update-value="defaultState"
-    :loading="loading"
     :schema="schema"
     :title="`Atualiar Usuário - ${state.name}`"
     api-route="users"
-    name="Users"
     backRoute="Users"
+    name="Users"
   >
     <div class="flex flex-1 justify-between gap-8">
       <div class="flex flex-1">
