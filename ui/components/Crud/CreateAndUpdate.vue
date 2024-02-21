@@ -51,6 +51,7 @@
   });
   async function onSubmitCreate(event: FormSubmitEvent<K>) {
     try {
+      
       loading.value = true;
 
       await $fetch(`/api/${props.apiRoute}`, {
