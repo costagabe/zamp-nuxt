@@ -14,6 +14,7 @@
     :cols="cols"
     name="user-profiles"
     title="Perfis de Usuário"
+    api-list-route="user-profiles"
     update-route="UpdateUserProfile"
     create-route="CreateUserProfile"
   />

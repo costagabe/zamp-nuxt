@@ -38,6 +38,7 @@
     :cols="cols"
     name="users"
     title="Usuários"
+    api-list-route="users"
     update-route="UpdateUser"
     create-route="CreateUser"
   >

@@ -1,11 +1,14 @@
 <script setup generic="T extends Record<string, any>" lang="ts">
   import type { TableColumn } from "~/ui/types/DataTableTypes";
+  import type { DropdownItem } from "#ui/types";
+
   import Pagination from "~/ui/components/Pagination.vue";
   type TableProps = {
     columns: TableColumn[];
     data: Array<T>;
     updateRoute: string;
     loading: boolean;
+    menus?: Array<DropdownItem>;
   };
 
   const router = useRouter();
@@ -15,25 +18,36 @@
 
   const [paginationModel] = defineModel<Pagination>("pagination");
 
-  const items = (row: { id: string }) => [
-    [
-      {
-        label: "Editar",
-        icon: "i-heroicons-pencil-square-20-solid",
-        click: () => router.push({ name: props.updateRoute, params: { id: row.id } }),
-      },
-      {
-        label: "Duplicar",
-        icon: "i-heroicons-document-duplicate-20-solid",
-      },
-    ],
-    [
-      {
-        label: "Apagar",
-        icon: "i-heroicons-trash-20-solid",
-      },
-    ],
-  ];
+  const items = (row: { id: string }) => {
+    const menus: Array<Array<DropdownItem>> = [
+      [
+        {
+          label: "Editar",
+          icon: "i-heroicons-pencil-square-20-solid",
+          click: () => router.push({ name: props.updateRoute, params: { id: row.id } }),
+        },
+        {
+          label: "Duplicar",
+          icon: "i-heroicons-document-duplicate-20-solid",
+        },
+      ],
+      [
+        {
+          label: "Apagar",
+          icon: "i-heroicons-trash-20-solid",
+        },
+      ],
+    ];
+
+    if (props.menus) {
+      menus.splice(
+        1,
+        0,
+        props.menus.map((v) => ({ ...v, click:() => v.click!(row) }))
+      );
+    }
+    return menus;
+  };
 </script>
 
 <template>

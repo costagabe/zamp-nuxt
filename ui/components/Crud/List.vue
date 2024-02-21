@@ -3,13 +3,16 @@
   import DataTable from "~/ui/components/DataTable.vue";
   import type { TableColumn } from "~/ui/types/DataTableTypes";
   import type { Page } from "~/ui/types/PaginationTypes";
+  import type { DropdownItem } from "#ui/types";
 
   type CrudListProps = {
     cols: Array<TableColumn>;
     name: string;
     title: string;
+    apiListRoute: string;
     updateRoute: string;
     createRoute: string;
+    menus?: Array<DropdownItem>;
   };
 
   const props = defineProps<CrudListProps>();
@@ -25,7 +28,7 @@
 
   const { data, status } = useAsyncData(
     props.name,
-    () => $fetch<Page<T>>(`/api/${props.name}`, { query: paginationQuery.value }),
+    () => $fetch<Page<T>>(`/api/${props.apiListRoute}`, { query: paginationQuery.value }),
     {
       watch: [paginationQuery],
       default: () =>
@@ -56,8 +59,9 @@
           v-model:pagination="data.pagination"
           :data="data.content"
           :columns="cols"
-          :update-route="updateRoute"
           :loading="loading"
+          :menus="menus"
+          :update-route="updateRoute"
         >
           <template
             v-for="(_, name) in $slots"
