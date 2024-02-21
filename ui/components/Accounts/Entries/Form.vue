@@ -67,11 +67,11 @@
     </div>
   </div>
   <u-form-group
-    label="Valor"
+    label="Valor (R$)"
     name="value"
   >
     <u-input
-      v-model="state.value"
+      v-model.number="state.value"
       :loading="loading"
     />
   </u-form-group>
@@ -81,15 +81,6 @@
   >
     <u-input
       v-model="state.history"
-      :loading="loading"
-    />
-  </u-form-group>
-  <u-form-group
-    label="Conta da transação"
-    name="classificationAccount"
-  >
-    <u-input
-      v-model="state.classificationAccount"
       :loading="loading"
     />
   </u-form-group>

@@ -10,6 +10,7 @@
     name: string;
     title: string;
     apiListRoute: string;
+    idRouteName: string;
     updateRoute: string;
     createRoute: string;
     menus?: Array<DropdownItem & { show?(row: T): boolean }>;
@@ -61,6 +62,7 @@
       <template #default>
         <data-table
           v-model:pagination="data.pagination"
+          :id-route-name="idRouteName"
           :data="data.content"
           :columns="cols"
           :menus="menus"

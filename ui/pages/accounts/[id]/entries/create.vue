@@ -5,12 +5,14 @@
 
   definePageMeta({ name: "CreateEntry" });
 
+  const route = useRoute();
+
   const defaultState: CreateEntryProps = {
     history: "",
     date: "",
     type: "IN",
     value: 0,
-    finnantialAccount: "",
+    financialAccount: route.params.id as string,
     classificationAccount: "",
   };
 
@@ -24,6 +26,23 @@
     value: number().required("Campo Obrigatório"),
     classificationAccount: string().trim().required("Campo Obrigatório"),
   });
+
+  const type = computed<Array<AccountType>>(() =>
+    state.value.type === "IN"
+      ? ["INCOME_ACCOUNT"]
+      : state.value.type === "OUT"
+        ? ["EXPENSE_ACCOUNT"]
+        : ["FINANCIAL_ACCOUNT"]
+  );
+
+  const { data: classificationAccounts } = useAsyncData<SelectOption[]>(
+    "classificationAccounts",
+    () =>
+      $fetch<SelectOption[]>("/api/accounts/select-list", {
+        query: { type: type.value, accountId: route.params.id },
+      }),
+    { default: () => [], watch: [type] }
+  );
 </script>
 
 <template>
@@ -38,6 +57,9 @@
     id-route-name="entryId"
     name="Entries"
   >
-    <accounts-entries-form v-model:state="state" />
+    <accounts-entries-form
+      v-model:state="state"
+      :classificationAccounts="classificationAccounts"
+    />
   </crud-create-and-update>
 </template>

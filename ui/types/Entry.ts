@@ -6,6 +6,6 @@ export type EntryDTO = {
   value: number;
   date: string;
   history: string;
-  finnantialAccount: string;
+  financialAccount: string;
   classificationAccount: string;
 };

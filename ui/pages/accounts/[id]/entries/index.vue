@@ -4,7 +4,7 @@
   definePageMeta({ name: "Entries" });
 
   const cols: Array<TableColumn> = [
-    { label: "Tipo da transação", key: "type" },
+    { label: "Tipo da transação", key: "type", class: "w-40" },
     { label: "Valor", key: "value" },
     { label: "Data", key: "date" },
     { label: "Descrição", key: "history" },
@@ -16,14 +16,15 @@
 <template>
   <crud-list
     :cols="cols"
+    :api-list-route="`accounts/${route.params.id}/entries`"
+    create-route="CreateEntry"
     name="entries"
     title="Lançamentos"
-    :api-list-route="`accounts/${route.params.id}/entries`"
+    id-route-name="entryId"
     update-route="UpdateEntry"
-    create-route="CreateEntry"
   >
     <template #type-data="{ row }">
-     <accounts-entries-badge :type="row.type"/>
+      <accounts-entries-badge :type="row.type" />
     </template>
   </crud-list>
 </template>

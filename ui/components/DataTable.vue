@@ -6,10 +6,12 @@
   type TableProps = {
     columns: TableColumn[];
     data: Array<T>;
+    idRouteName: string;
     updateRoute: string;
     menus?: Array<DropdownItem & { show?(row: T): boolean }>;
   };
 
+  const route = useRoute();
   const router = useRouter();
   const props = defineProps<TableProps>();
 
@@ -19,13 +21,18 @@
 
   const [paginationModel] = defineModel<Pagination>("pagination");
 
-  const items = (row:T) => {
+  const items = (row: T) => {
     const menus: Array<Array<DropdownItem>> = [
       [
         {
           label: "Editar",
           icon: "i-heroicons-pencil-square-20-solid",
-          click: () => router.push({ name: props.updateRoute, params: { id: row.id } }),
+          click: () => {
+            router.push({
+              name: props.updateRoute,
+              params: { ...route.params, [props.idRouteName]: row.id },
+            });
+          },
         },
         {
           label: "Duplicar",

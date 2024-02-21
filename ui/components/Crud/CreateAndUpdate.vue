@@ -87,7 +87,7 @@
         color: "emerald",
       });
     } catch (e) {
-      const error = e as FetchError<ApiError>;
+      const error = e as FetchError<ApiError>;        
       form.value.setErrors(getValidationsFromApiError(error));
     } finally {
       loading.value = false;
