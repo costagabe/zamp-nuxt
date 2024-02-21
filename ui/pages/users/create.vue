@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from "#ui/types";
   import { type FetchError } from "ofetch";
-  import { array, object, string, type InferType } from "yup";
-  import type { SelectOption } from "~/ui/types/SelectOption";
+  import { array, object, string } from "yup";
+  import { useUserProfileStore } from "~/ui/stores/userProfileStore";
   import { getValidationsFromApiError } from "~/ui/util/ExceptionUtils";
 
   type CreateUserForm = {
@@ -23,24 +23,14 @@
 
   const form = ref();
 
-  const loading = ref(false);
+  const { loading } = storeToRefs(useAppStore());
+
+  const { userProfileList } = storeToRefs(useUserProfileStore());
 
   const schema = object<CreateUserForm>().shape({
     name: string().trim().min(5, "Preencha o nome completo").required("Campo Obrigatório"),
     email: string().email("Email inválido").required("Campo Obrigatório"),
     profileIds: array().of(string().uuid("Campo inválido")).required("Campo Obrigatório"),
-  });
-
-  const { data: userProfileList, status } = useAsyncData(
-    "userProfileSelectList",
-    () => $fetch<Array<SelectOption>>("/api/user-profiles/select-list"),
-    {
-      default: () => [] as Array<SelectOption>,
-    }
-  );
-
-  watch(status, (value) => {
-    loading.value = value === "pending";
   });
 
   async function onSubmit(event: FormSubmitEvent<CreateUserForm>) {
@@ -69,7 +59,6 @@
       loading.value = false;
     }
   }
-
 </script>
 
 <template>

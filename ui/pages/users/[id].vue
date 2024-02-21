@@ -4,6 +4,7 @@
   import { object, string, type InferType, array } from "yup";
   import { type FetchError } from "ofetch";
   import { getValidationsFromApiError } from "~/ui/util/ExceptionUtils";
+  import { useUserProfileStore } from "~/ui/stores/userProfileStore";
 
   type UpdateUserForm = {
     id: string;
@@ -18,8 +19,6 @@
   const toast = useToast();
 
   const form = ref();
-
-  const loading = ref(false);
 
   const state = ref<UpdateUserForm>({
     id: "",
@@ -43,6 +42,10 @@
   });
 
   const situationLabel = computed(() => (situation.value ? "Situação: Ativo" : "Situação: Inativo"));
+
+  const { loading } = storeToRefs(useAppStore());
+
+  const { userProfileList } = storeToRefs(useUserProfileStore());
 
   const schema = object<UpdateUserForm>().shape({
     name: string().trim().min(5, "Preencha o nome completo").required("Campo Obrigatório"),
@@ -70,18 +73,6 @@
 
   watch(data, (value) => {
     state.value = value;
-  });
-
-  const { data: userProfileList, status } = useAsyncData(
-    "userProfileSelectList",
-    () => $fetch<Array<SelectOption>>("/api/user-profiles/select-list"),
-    {
-      default: () => [] as Array<SelectOption>,
-    }
-  );
-
-  watch(status, (status) => {
-    loading.value = status === "pending";
   });
 
   async function onSubmit(event: FormSubmitEvent<UpdateUserForm>) {
