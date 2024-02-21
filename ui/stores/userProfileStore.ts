@@ -1,4 +1,3 @@
-import type { MenuEnum } from "../enum/MenuEnum";
 import { useAppStore } from "./appStore";
 
 export const useUserProfileStore = defineStore("userProfile", () => {

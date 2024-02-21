@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import type { FormSubmitEvent } from "#ui/types";
-  import { type FetchError } from "ofetch";
   import { number, object, string } from "yup";
-  import { getValidationsFromApiError } from "~/ui/util/ExceptionUtils";
 
   type UpdateUserForm = {
     id: string;

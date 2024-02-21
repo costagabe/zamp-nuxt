@@ -1,8 +1,7 @@
 <script setup lang="ts">
-  import type { TableColumn } from "~/ui/types/DataTableTypes";
-  import DataTable from "~/ui/components/DataTable.vue";
-  import type { Page } from "~/ui/types/PaginationTypes";
   import { useAsyncData } from "#app";
+  import type { TableColumn } from "~/ui/types/DataTableTypes";
+  import type { Page } from "~/ui/types/PaginationTypes";
 
   definePageMeta({ name: "Users" });
 

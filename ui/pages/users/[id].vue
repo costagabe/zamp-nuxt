@@ -1,9 +1,5 @@
 <script setup lang="ts">
-  import type { SelectOption } from "~/ui/types/SelectOption";
-  import type { FormSubmitEvent } from "#ui/types";
-  import { object, string, type InferType, array } from "yup";
-  import { type FetchError } from "ofetch";
-  import { getValidationsFromApiError } from "~/ui/util/ExceptionUtils";
+  import { array, object, string } from "yup";
   import { useUserProfileStore } from "~/ui/stores/userProfileStore";
 
   type UpdateUserForm = {
@@ -54,7 +50,6 @@
     profileIds: array().of(string().uuid("Campo inválido")).required("Campo Obrigatório"),
     situation: string().oneOf(["ACTIVE", "INACTIVE"], "Situação inválida").required("Campo Obrigatório"),
   });
-
 </script>
 
 <template>
