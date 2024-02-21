@@ -6,6 +6,11 @@ export default defineAppConfig({
       // Show toasts at the top right of the screen
       position: "top-0 bottom-auto",
     },
+    table: {
+      td: {
+        padding: "py-2",
+      }
+    }
     
   },
 });
