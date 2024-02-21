@@ -5,6 +5,7 @@
     columns: TableColumn[];
     data: Array<T>;
     updateRoute: string;
+    loading: boolean;
   };
 
   const router = useRouter();
@@ -40,6 +41,7 @@
     <u-table
       :columns="cols"
       :rows="data"
+      :loading="loading"
     >
       <template #id-data="{ row }">
         <u-dropdown :items="items(row)">

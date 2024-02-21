@@ -35,35 +35,23 @@
 </script>
 
 <template>
-  <div class="container mx-auto w-10/12">
-    <u-card>
-      <template #header>
-        <div class="flex flex-1 align-middle justify-between">
-          <p class="text-white align-bottom">Usuários</p>
-          <u-button :to="{ name: 'CreateUser' }">Adicionar</u-button>
-        </div>
-      </template>
-
-      <template #default>
-        <data-table
-          v-model:pagination="userPage.pagination"
-          :data="userPage.content"
-          :columns="cols"
-          update-route="UpdateUser"
+  <crud-list
+    :cols="cols"
+    name="users"
+    title="Usuários"
+    update-route="UpdateUser"
+    create-route="CreateUser"
+  >
+    <template #situation-data="{ row }">
+      <div class="flex justify-center">
+        <u-badge
+          :color="row.situation === 'ACTIVE' ? 'emerald' : 'red'"
+          :label="row.situation === 'ACTIVE' ? 'Ativo' : 'Inativo'"
+          variant="subtle"
         >
-          <template #situation-data="{ row }">
-            <div class="flex justify-center">
-              <u-badge
-                :color="row.situation === 'ACTIVE' ? 'emerald' : 'red'"
-                :label="row.situation === 'ACTIVE' ? 'Ativo' : 'Inativo'"
-                variant="subtle"
-              >
-                {{ row.situation === "ACTIVE" ? "Ativo" : "Inativo" }}
-              </u-badge>
-            </div>
-          </template>
-        </data-table>
-      </template>
-    </u-card>
-  </div>
+          {{ row.situation === "ACTIVE" ? "Ativo" : "Inativo" }}
+        </u-badge>
+      </div>
+    </template>
+  </crud-list>
 </template>

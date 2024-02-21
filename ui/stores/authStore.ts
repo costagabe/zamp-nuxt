@@ -2,6 +2,7 @@ export const useAuthStore = defineStore(
   "auth",
   () => {
     const authenticated = ref<boolean>(false);
+    const level = ref<number | null>(null);
     const token = ref<string | null>(null);
 
     const form = ref({
@@ -26,6 +27,7 @@ export const useAuthStore = defineStore(
 
     return {
       authenticated,
+      level,
       token,
       form,
       authenticate,

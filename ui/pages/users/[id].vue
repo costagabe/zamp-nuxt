@@ -20,13 +20,14 @@
 
   const form = ref();
 
-  const state = ref<UpdateUserForm>({
+  const defaultState: UpdateUserForm = {
     id: "",
     name: "",
     email: "",
     profileIds: [],
     situation: "INACTIVE",
-  });
+  };
+  const state = ref<UpdateUserForm>({ ...defaultState });
 
   const route = useRoute();
 
@@ -54,56 +55,17 @@
     situation: string().oneOf(["ACTIVE", "INACTIVE"], "Situação inválida").required("Campo Obrigatório"),
   });
 
-  const { data, error } = useAsyncData(
-    "userUpdateData",
-    () => $fetch<UpdateUserForm>(`/api/users/${id.value}`),
-    { default: () => ({ id: "", name: "", email: "", profileIds: [], situation: "INACTIVE" as any }) }
-  );
-
-  watch(error, (value) => {
-    if (value?.data) {
-      const data = value.data as ApiError;
-
-      toast.add({
-        title: data.title,
-        color: "red",
-      });
-    }
-  });
-
-  watch(data, (value) => {
-    state.value = value;
-  });
-
-  async function onSubmit(event: FormSubmitEvent<UpdateUserForm>) {
-    try {
-      loading.value = true;
-
-      await $fetch(`/api/users/${id.value}`, {
-        method: "PUT",
-        body: event.data,
-      });
-
-      toast.add({
-        title: "Usuário alterado com sucesso",
-        color: "emerald",
-      });
-    } catch (e) {
-      const error = e as FetchError<ApiError>;
-      form.value.setErrors(getValidationsFromApiError(error));
-    } finally {
-      loading.value = false;
-    }
-  }
 </script>
 
 <template>
   <crud-create-and-update
     v-model:state="state"
-    :title="`Alterar Usuário - ${state.name}`"
-    :schema="schema"
+    :default-update-value="defaultState"
     :loading="loading"
-    @submit="onSubmit"
+    :schema="schema"
+    :title="`Atualiar Usuário - ${state.name}`"
+    api-route="users"
+    name="Users"
     backRoute="Users"
   >
     <div class="flex flex-1 justify-between gap-8">

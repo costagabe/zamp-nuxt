@@ -1,9 +1,6 @@
 <script setup lang="ts">
-  import type { FormSubmitEvent } from "#ui/types";
-  import { type FetchError } from "ofetch";
   import { array, object, string } from "yup";
-  import { useUserProfileStore } from "~/ui/stores/userProfileStore";
-  import { getValidationsFromApiError } from "~/ui/util/ExceptionUtils";
+import { useUserProfileStore } from "~/ui/stores/userProfileStore";
 
   type CreateUserForm = {
     name: string;
@@ -15,13 +12,13 @@
 
   const toast = useToast();
 
-  const state = ref<CreateUserForm>({
+  const defaultState: CreateUserForm = {
     name: "",
     email: "",
     profileIds: [],
-  });
+  };
 
-  const form = ref();
+  const state = ref<CreateUserForm>({ ...defaultState });
 
   const { loading } = storeToRefs(useAppStore());
 
@@ -33,41 +30,17 @@
     profileIds: array().of(string().uuid("Campo inválido")).required("Campo Obrigatório"),
   });
 
-  async function onSubmit(event: FormSubmitEvent<CreateUserForm>) {
-    try {
-      loading.value = true;
-
-      await $fetch("/api/users", {
-        method: "POST",
-        body: event.data,
-      });
-
-      toast.add({
-        title: "Usuário criado com sucesso",
-        color: "emerald",
-      });
-
-      state.value = {
-        name: "",
-        email: "",
-        profileIds: [],
-      };
-    } catch (e) {
-      const error = e as FetchError<ApiError>;
-      form.value.setErrors(getValidationsFromApiError(error));
-    } finally {
-      loading.value = false;
-    }
-  }
 </script>
 
 <template>
   <crud-create-and-update
     v-model:state="state"
-    :title="`Criar Usuário`"
-    :schema="schema"
+    :default-update-value="defaultState"
     :loading="loading"
-    @submit="onSubmit"
+    :schema="schema"
+    :title="`Criar Usuário`"
+    api-route="users"
+    name="Users"
     backRoute="Users"
   >
     <u-form-group
