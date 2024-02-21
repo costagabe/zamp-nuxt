@@ -11,6 +11,7 @@
   ];
 
   const router = useRouter();
+
   const menus = [
     {
       label: "Lançamentos",
@@ -31,25 +32,7 @@
     create-route="CreateAccount"
   >
     <template #type-data="{ row }">
-      <u-badge
-        :color="row.type === 'INCOME_ACCOUNT' ? 'emerald' : row.type === 'EXPENSE_ACCOUNT' ? 'red' : 'blue'"
-        :label="
-          row.type === 'INCOME_ACCOUNT'
-            ? 'Receita'
-            : row.type === 'EXPENSE_ACCOUNT'
-              ? 'Despesa'
-              : 'Financeira'
-        "
-        variant="subtle"
-      >
-        {{
-          row.type === "INCOME_ACCOUNT"
-            ? "Receita"
-            : row.type === "EXPENSE_ACCOUNT"
-              ? "Despesa"
-              : "Financeira"
-        }}
-      </u-badge>
+      <accounts-badge :type="row.type" />
     </template>
   </crud-list>
 </template>
