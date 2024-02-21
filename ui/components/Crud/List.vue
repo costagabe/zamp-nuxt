@@ -12,7 +12,7 @@
     apiListRoute: string;
     updateRoute: string;
     createRoute: string;
-    menus?: Array<DropdownItem>;
+    menus?: Array<DropdownItem & { show?(row: T): boolean }>;
   };
 
   const props = defineProps<CrudListProps>();

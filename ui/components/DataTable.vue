@@ -7,7 +7,7 @@
     columns: TableColumn[];
     data: Array<T>;
     updateRoute: string;
-    menus?: Array<DropdownItem>;
+    menus?: Array<DropdownItem & { show?(row: T): boolean }>;
   };
 
   const router = useRouter();
@@ -19,7 +19,7 @@
 
   const [paginationModel] = defineModel<Pagination>("pagination");
 
-  const items = (row: { id: string }) => {
+  const items = (row:T) => {
     const menus: Array<Array<DropdownItem>> = [
       [
         {
@@ -40,7 +40,7 @@
       ],
     ];
 
-    if (props.menus) {
+    if (props.menus && props.menus?.find((menu) => menu.show?.(row) ?? true)) {
       menus.splice(
         1,
         0,
