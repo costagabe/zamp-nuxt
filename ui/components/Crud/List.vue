@@ -39,9 +39,13 @@
     }
   );
 
-  watch(status, (value) => {
-    loading.value = value === "pending";
-  });
+  watch(
+    status,
+    (value) => {
+      loading.value = value === "pending";
+    },
+    { immediate: true }
+  );
 </script>
 
 <template>
@@ -59,7 +63,6 @@
           v-model:pagination="data.pagination"
           :data="data.content"
           :columns="cols"
-          :loading="loading"
           :menus="menus"
           :update-route="updateRoute"
         >

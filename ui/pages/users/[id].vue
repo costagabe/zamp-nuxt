@@ -42,7 +42,13 @@
 
   const { loading } = storeToRefs(useAppStore());
 
-  const { userProfileList } = storeToRefs(useUserProfileStore());
+  const { data: userProfileList, status } = useAsyncData(
+    "userProfileSelectList",
+    () => $fetch<Array<SelectOption>>("/api/user-profiles/select-list"),
+    {
+      default: () => [] as Array<SelectOption>,
+    }
+  );
 
   const schema = object<UpdateUserForm>().shape({
     name: string().trim().min(5, "Preencha o nome completo").required("Campo Obrigatório"),

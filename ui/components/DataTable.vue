@@ -7,12 +7,13 @@
     columns: TableColumn[];
     data: Array<T>;
     updateRoute: string;
-    loading: boolean;
     menus?: Array<DropdownItem>;
   };
 
   const router = useRouter();
   const props = defineProps<TableProps>();
+
+  const { loading } = storeToRefs(useAppStore());
 
   const cols = computed(() => [...props.columns, { label: "Ações", key: "id", class: "w-[80px]" }]);
 
@@ -43,7 +44,7 @@
       menus.splice(
         1,
         0,
-        props.menus.map((v) => ({ ...v, click:() => v.click!(row) }))
+        props.menus.map((v) => ({ ...v, click: () => v.click!(row) }))
       );
     }
     return menus;
@@ -56,6 +57,7 @@
       :columns="cols"
       :rows="data"
       :loading="loading"
+      :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: 'Carregando...' }"
     >
       <template #id-data="{ row }">
         <u-dropdown :items="items(row)">
