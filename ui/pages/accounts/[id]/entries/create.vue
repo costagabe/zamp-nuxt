@@ -2,22 +2,22 @@
   import { number, object, string } from "yup";
   import type { AccountDTO } from "~/ui/types/Account";
 
-  type CreateAccountProps = AccountDTO;
+  type CreateEntryProps = AccountDTO;
 
   definePageMeta({ name: "CreateEntry" });
 
-  const defaultState: CreateAccountProps = {
+  const defaultState: CreateEntryProps = {
     name: "",
     code: "",
     type: "INCOME_ACCOUNT",
     balance: 0,
   };
 
-  const state = ref<CreateAccountProps>({ ...defaultState });
+  const state = ref<CreateEntryProps>({ ...defaultState });
 
   const { loading } = storeToRefs(useAppStore());
 
-  const schema = object<CreateAccountProps>().shape({
+  const schema = object<CreateEntryProps>().shape({
     name: string().trim().required("Campo Obrigatório"),
     code: string().trim().required("Campo Obrigatório"),
     type: string()
