@@ -13,10 +13,16 @@
   const router = useRouter();
 
   const menus = [
-    {
+  {
       label: "Lançamentos",
       icon: "i-heroicons-document-chart-bar",
       click: (row: AccountDTO) => router.push({ name: "Entries", params: { id: row.id } }),
+      show: (row: AccountDTO) => row.type === "FINANCIAL_ACCOUNT",
+    },
+    {
+      label: "Novo Lançamento",
+      icon: "i-heroicons-document-plus",
+      click: (row: AccountDTO) => router.push({ name: "CreateEntry", params: { id: row.id } }),
       show: (row: AccountDTO) => row.type === "FINANCIAL_ACCOUNT",
     },
   ];

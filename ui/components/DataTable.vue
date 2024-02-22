@@ -36,10 +36,6 @@
             });
           },
         },
-        {
-          label: "Duplicar",
-          icon: "i-heroicons-document-duplicate-20-solid",
-        },
       ],
       [
         {
