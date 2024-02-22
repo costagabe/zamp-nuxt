@@ -5,10 +5,12 @@ export enum MenuEnum {
     PROFILES_MENU = "PROFILES_MENU",
     USERS_MENU = "USERS_MENU",
     ACCOUNTS_MENU = "ACCOUNTS_MENU",
+    CLIENTS_MENU = "CLIENTS_MENU",
 }
 
 export enum MenuCategoryEnum {
     GENERAL = "GENERAL",
     SYSTEM = "SYSTEM",
     CASH_BOOK = "CASH_BOOK",
+    CRM = "CRM",
 }

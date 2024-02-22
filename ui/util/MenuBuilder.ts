@@ -38,6 +38,13 @@ export const menuStructure: Record<MenuCategoryEnum, Partial<Record<MenuEnum, Me
       label: "Parâmetros",
     },
   },
+  [MenuCategoryEnum.CRM]: {
+    [MenuEnum.USERS_MENU]: {
+      to: "/clients",
+      icon: "i-heroicons-user-group",
+      label: "Clientes",
+    },
+  },
   [MenuCategoryEnum.CASH_BOOK]: {
     [MenuEnum.ACCOUNTS_MENU]: {
       to: "/accounts",
@@ -48,6 +55,7 @@ export const menuStructure: Record<MenuCategoryEnum, Partial<Record<MenuEnum, Me
 };
 
 const menuMap: Record<MenuEnum, MenuCategoryEnum> = {
+  [MenuEnum.CLIENTS_MENU]: MenuCategoryEnum.CRM,
   [MenuEnum.ACCOUNTS_MENU]: MenuCategoryEnum.CASH_BOOK,
   [MenuEnum.COMPANIES_MENU]: MenuCategoryEnum.SYSTEM,
   [MenuEnum.HOME_MENU]: MenuCategoryEnum.GENERAL,
@@ -60,6 +68,7 @@ export function generateMenuStructure(userMenus: Array<MenuEnum>) {
   const menuStructureResponse: Record<MenuCategoryEnum, Array<MenuProps>> = {
     [MenuCategoryEnum.GENERAL]: [],
     [MenuCategoryEnum.SYSTEM]: [],
+    [MenuCategoryEnum.CRM]: [],
     [MenuCategoryEnum.CASH_BOOK]: [],
   };
 
