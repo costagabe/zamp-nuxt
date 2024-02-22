@@ -24,6 +24,23 @@
     id-route-name="entryId"
     update-route="UpdateEntry"
   >
+    <template #header>
+      <div class="flex flex-1 align-middle justify-between">
+        <div class="flex">
+          <u-button
+            :to="{ name: 'Accounts' }"
+            variant="ghost"
+          >
+            <u-icon
+              name="i-heroicons-arrow-left-20-solid"
+              class="text-xl"
+            />
+          </u-button>
+          <p class="text-white align-bottom ml-8 mt-1">Lançamentos</p>
+        </div>
+        <u-button :to="{ name: 'CreateEntry' }">Adicionar</u-button>
+      </div>
+    </template>
     <template #value-data="{ row }">
       {{ toCurrency(row.value) }}
     </template>

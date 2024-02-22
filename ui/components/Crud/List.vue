@@ -18,6 +18,8 @@
 
   const props = withDefaults(defineProps<CrudListProps>(), { idRouteName: "id" });
 
+  const slots = useSlots();
+
   const route = useRoute();
 
   const { loading } = storeToRefs(useAppStore());
@@ -47,13 +49,19 @@
     },
     { immediate: true }
   );
+
+  const hasHeader = computed(() => slots.header !== undefined);
 </script>
 
 <template>
   <div class="container mx-auto w-10/12">
     <u-card>
       <template #header>
-        <div class="flex flex-1 align-middle justify-between">
+        <slot name="header" />
+        <div
+          v-if="!hasHeader"
+          class="flex flex-1 align-middle justify-between"
+        >
           <p class="text-white align-bottom">{{ title }}</p>
           <u-button :to="{ name: createRoute }">Adicionar</u-button>
         </div>
