@@ -11,12 +11,13 @@
     backRoute: string;
     schema: ObjectSchema<any>;
     defaultUpdateValue: T;
+    resetOnSubmit?: boolean;
     idRouteName?: string;
   };
 
   const [state] = defineModel<T>("state", { default: {} as T });
 
-  const props = withDefaults(defineProps<CreateAndUpdateProps>(), { idRouteName: "id" });
+  const props = withDefaults(defineProps<CreateAndUpdateProps>(), { idRouteName: "id", resetOnSubmit: true });
   const emit = defineEmits<{ (e: "submit"): void }>();
 
   const toast = useToast();
@@ -62,8 +63,9 @@
         title: "Formulário enviado com sucesso",
         color: "emerald",
       });
-
-      state.value = { ...props.defaultUpdateValue };
+      if (props.resetOnSubmit) {
+        state.value = { ...props.defaultUpdateValue };
+      }
       emit("submit");
     } catch (e) {
       const error = e as FetchError<ApiError>;
@@ -87,7 +89,7 @@
         color: "emerald",
       });
     } catch (e) {
-      const error = e as FetchError<ApiError>;        
+      const error = e as FetchError<ApiError>;
       form.value.setErrors(getValidationsFromApiError(error));
     } finally {
       loading.value = false;

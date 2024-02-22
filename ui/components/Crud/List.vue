@@ -10,13 +10,13 @@
     name: string;
     title: string;
     apiListRoute: string;
-    idRouteName: string;
     updateRoute: string;
     createRoute: string;
+    idRouteName?: string;
     menus?: Array<DropdownItem & { show?(row: T): boolean }>;
   };
 
-  const props = defineProps<CrudListProps>();
+  const props = withDefaults(defineProps<CrudListProps>(), { idRouteName: "id" });
 
   const route = useRoute();
 
@@ -27,7 +27,7 @@
     size: route.query.size ?? "10",
   }));
 
-  const { data, status } = useAsyncData(
+  const { data, status, refresh } = useAsyncData(
     props.name,
     () => $fetch<Page<T>>(`/api/${props.apiListRoute}`, { query: paginationQuery.value }),
     {
@@ -62,11 +62,13 @@
       <template #default>
         <data-table
           v-model:pagination="data.pagination"
+          :api-list-route="apiListRoute"
           :id-route-name="idRouteName"
           :data="data.content"
           :columns="cols"
           :menus="menus"
           :update-route="updateRoute"
+          @delete="refresh"
         >
           <template
             v-for="(_, name) in $slots"

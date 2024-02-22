@@ -53,6 +53,7 @@
     :schema="schema"
     :title="`Criar Lançamento de  Conta`"
     :api-route="`accounts/${$route.params.id}/entries`"
+    :reset-on-submit="false"
     backRoute="Entries"
     id-route-name="entryId"
     name="Entries"

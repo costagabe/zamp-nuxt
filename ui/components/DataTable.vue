@@ -8,12 +8,14 @@
     data: Array<T>;
     idRouteName: string;
     updateRoute: string;
+    apiListRoute: string;
     menus?: Array<DropdownItem & { show?(row: T): boolean }>;
   };
 
   const route = useRoute();
   const router = useRouter();
   const props = defineProps<TableProps>();
+  const emits = defineEmits(["delete"]);
 
   const { loading } = storeToRefs(useAppStore());
 
@@ -43,6 +45,13 @@
         {
           label: "Apagar",
           icon: "i-heroicons-trash-20-solid",
+          click: async () => {
+            try {
+              await $fetch(`/api/${props.apiListRoute}/${row.id}`, { method: "DELETE" });
+            } finally {
+              emits("delete");
+            }
+          },
         },
       ],
     ];

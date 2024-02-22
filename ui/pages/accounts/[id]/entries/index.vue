@@ -5,9 +5,10 @@
 
   const cols: Array<TableColumn> = [
     { label: "Tipo da transação", key: "type", class: "w-40" },
-    { label: "Valor", key: "value" },
-    { label: "Data", key: "date" },
+    { label: "Conta", key: "classificationAccountName" },
+    { label: "Valor (R$)", key: "value" },
     { label: "Descrição", key: "history" },
+    { label: "Data", key: "date" },
   ];
 
   const route = useRoute();
@@ -23,6 +24,9 @@
     id-route-name="entryId"
     update-route="UpdateEntry"
   >
+    <template #value-data="{ row }">
+      {{ toCurrency(row.value) }}
+    </template>
     <template #type-data="{ row }">
       <accounts-entries-badge :type="row.type" />
     </template>

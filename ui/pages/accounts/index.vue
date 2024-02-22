@@ -32,6 +32,9 @@
     update-route="UpdateAccount"
     create-route="CreateAccount"
   >
+    <template #balance-data="{ row }">
+      {{ toCurrency(row.balance) }}
+    </template>
     <template #type-data="{ row }">
       <accounts-badge :type="row.type" />
     </template>
