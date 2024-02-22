@@ -112,7 +112,7 @@
       <u-form
         :schema="schema"
         :state="state"
-        :validate-on="['submit']"
+        :validate-on="['submit', 'blur']"
         @submit="onSubmit"
         class="space-y-4"
         ref="form"

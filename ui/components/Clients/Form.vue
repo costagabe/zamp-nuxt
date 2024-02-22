@@ -68,6 +68,6 @@
     </u-form-group>
   </div>
 
-  <u-divider class="mt-8 mb-4" />
+  <u-divider class="mt-8 mb-0" />
   <address-form v-model:state="state.address" />
 </template>
