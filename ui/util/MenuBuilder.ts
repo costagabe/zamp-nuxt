@@ -1,5 +1,4 @@
 import { MenuCategoryEnum, MenuEnum } from "../enum/MenuEnum";
-import { AdjustmentsHorizontalIcon, BriefcaseIcon, HomeIcon, UserCircleIcon, UserIcon, WalletIcon } from "@heroicons/vue/24/solid";
 
 export type MenuProps = {
   to: string;
@@ -72,7 +71,9 @@ export function generateMenuStructure(userMenus: Array<MenuEnum>) {
     }
   });
 
-  const arrays = Object.keys(menuStructureResponse).map((key) => menuStructureResponse[key as MenuCategoryEnum]);
+  const arrays = Object.keys(menuStructureResponse).map(
+    (key) => menuStructureResponse[key as MenuCategoryEnum]
+  );
 
   return arrays;
 }

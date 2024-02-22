@@ -1,7 +1,5 @@
 <script setup lang="ts">
-  import { useAsyncData } from "#app";
   import type { TableColumn } from "~/ui/types/DataTableTypes";
-  import type { Page } from "~/ui/types/PaginationTypes";
 
   definePageMeta({ name: "Users" });
 
@@ -11,26 +9,6 @@
     { label: "Perfil", key: "profile" },
     { label: "Situação", key: "situation", class: "text-center" },
   ];
-
-  const route = useRoute();
-
-  const paginationQuery = computed(() => ({
-    page: route.query.page ?? "0",
-    size: route.query.size ?? "10",
-  }));
-
-  const { data: userPage } = useAsyncData(
-    "users",
-    () => $fetch<Page<ReadUserDTO>>("/api/users", { query: paginationQuery.value }),
-    {
-      watch: [paginationQuery],
-      default: () =>
-        ({
-          content: [],
-          pagination: undefined,
-        }) as Page<ReadUserDTO>,
-    }
-  );
 </script>
 
 <template>

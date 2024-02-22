@@ -11,10 +11,6 @@
 
   definePageMeta({ name: "UpdateUser" });
 
-  const toast = useToast();
-
-  const form = ref();
-
   const defaultState: UpdateUserForm = {
     id: "",
     name: "",
@@ -23,10 +19,6 @@
     situation: "INACTIVE",
   };
   const state = ref<UpdateUserForm>({ ...defaultState });
-
-  const route = useRoute();
-
-  const id = computed(() => route.params.id);
 
   const situation = computed({
     get() {

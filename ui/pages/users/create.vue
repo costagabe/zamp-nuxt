@@ -9,8 +9,6 @@
 
   definePageMeta({ name: "CreateUser" });
 
-  const toast = useToast();
-
   const defaultState: CreateUserForm = {
     name: "",
     email: "",
