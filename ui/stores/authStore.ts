@@ -10,6 +10,8 @@ export const useAuthStore = defineStore(
       password: "admin",
     });
 
+    const router = useRouter();
+
     async function authenticate(username: string, password: string) {
       const res = await useFetch<any>("/api/auth", {
         body: { username, password },
@@ -25,12 +27,20 @@ export const useAuthStore = defineStore(
       return res;
     }
 
+    async function logout() {
+      await $fetch("/api/auth/logout");
+      authenticated.value = false;
+      level.value = null;
+      router.push("/login");
+    }
+
     return {
       authenticated,
       level,
       token,
       form,
       authenticate,
+      logout,
     };
   },
   {
