@@ -1,5 +1,6 @@
 <script setup lang="ts">
-  import { array, object, string } from "yup";
+  import * as Yup from "yup";
+  import type { PersonType } from "~/ui/types/Client";
 
   type CreateClientForm = ClientDTO;
 
@@ -25,8 +26,6 @@
   };
 
   const state = ref<CreateClientForm>({ ...defaultState });
-  import * as Yup from "yup";
-  import type { PersonType } from "~/ui/types/Client";
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Nome Completo é obrigatório"),
@@ -58,7 +57,6 @@
       complement: Yup.string(),
     }),
   });
-
 </script>
 
 <template>
@@ -67,7 +65,7 @@
     :default-update-value="defaultState"
     :schema="schema"
     :title="`Criar Cliente`"
-    api-route=""
+    api-route="clients"
     name="clients"
     backRoute="clients"
   >

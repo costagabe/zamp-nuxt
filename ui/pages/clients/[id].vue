@@ -1,30 +1,61 @@
 <script setup lang="ts">
-  import { array, object, string } from "yup";
+  import * as Yup from "yup";
 
-  type UpdateForm = {
-    id: string;
-    name: string;
-    email: string;
-    profileIds: Array<string>;
-    situation: "ACTIVE" | "INACTIVE";
-  };
+  type UpdateClientForm = ClientDTO;
 
   definePageMeta({ name: "UpdateClient" });
 
-  const defaultState: UpdateForm = {
-    id: "",
+
+  const defaultState: UpdateClientForm = {
     name: "",
     email: "",
-    profileIds: [],
-    situation: "INACTIVE",
+    phone: "",
+    cpf: "",
+    cnpj: "",
+    rg: "",
+    clientTypes: [],
+    personType: "PF",
+    address: {
+      street: "",
+      neighbourhood: "",
+      city: "",
+      cep: "",
+      number: "",
+      complement: "",
+    },
   };
-  const state = ref<UpdateForm>({ ...defaultState });
 
-  const schema = object<UpdateForm>().shape({
-    name: string().trim().min(5, "Preencha o nome completo").required("Campo Obrigatório"),
-    email: string().email("Email inválido").required("Campo Obrigatório"),
-    profileIds: array().of(string().uuid("Campo inválido")).required("Campo Obrigatório"),
-    situation: string().oneOf(["ACTIVE", "INACTIVE"], "Situação inválida").required("Campo Obrigatório"),
+  const state = ref<UpdateClientForm>({ ...defaultState });
+
+  const schema = Yup.object().shape({
+    name: Yup.string().required("Nome Completo é obrigatório"),
+    email: Yup.string().email("Email inválido").required("Email é obrigatório"),
+    phone: Yup.string().required("Telefone é obrigatório"),
+    personType: Yup.string().oneOf(["PF", "PJ"]).required("Tipo é obrigatório"),
+    clientTypes: Yup.array()
+      .of(Yup.string().oneOf(["LESSEE", "LESSOR"]))
+      .min(1, "Tipo de cliente é obrigatório"),
+    cpf: Yup.string().when("personType", {
+      is: (personType: PersonType) => personType === "PF",
+      then: () => Yup.string().required("CPF é obrigatório"),
+      otherwise: () => Yup.string(),
+    }),
+    cnpj: Yup.string().when("personType", {
+      is: (personType: PersonType) => personType === "PJ",
+      then: () => Yup.string().required("CNPJ é obrigatório"),
+      otherwise: () => Yup.string(),
+    }),
+    rg: Yup.string().required("RG é obrigatório"),
+    address: Yup.object().shape({
+      street: Yup.string().required("Rua é obrigatória"),
+      neighbourhood: Yup.string().required("Bairro é obrigatório"),
+      city: Yup.string().required("Cidade é obrigatória"),
+      cep: Yup.string()
+        .matches(/^[0-9]{5}-[0-9]{3}$/, "CEP Inválido")
+        .required("CEP é obrigatório"),
+      number: Yup.number().typeError("Número inválido").required("Número é obrigatório"),
+      complement: Yup.string(),
+    }),
   });
 </script>
 
@@ -34,10 +65,10 @@
     :default-update-value="defaultState"
     :schema="schema"
     :title="`Atualiar Cliente - ${state.name}`"
-    api-route=""
+    api-route="clients"
     backRoute="clients"
     name="clients"
   >
-    
+    <clients-form v-model:state="state" />
   </crud-create-and-update>
 </template>
