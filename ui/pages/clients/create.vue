@@ -33,6 +33,9 @@
     email: Yup.string().email("Email inválido").required("Email é obrigatório"),
     phone: Yup.string().required("Telefone é obrigatório"),
     personType: Yup.string().oneOf(["PF", "PJ"]).required("Tipo é obrigatório"),
+    clientTypes: Yup.array()
+      .of(Yup.string().oneOf(["LESSEE", "LESSOR"]))
+      .min(1, "Tipo de cliente é obrigatório"),
     cpf: Yup.string().when("personType", {
       is: (personType: PersonType) => personType === "PF",
       then: () => Yup.string().required("CPF é obrigatório"),
@@ -51,10 +54,11 @@
       cep: Yup.string()
         .matches(/^[0-9]{5}-[0-9]{3}$/, "CEP Inválido")
         .required("CEP é obrigatório"),
-      number: Yup.number().required("Número é obrigatório"),
+      number: Yup.number().typeError("Número inválido").required("Número é obrigatório"),
       complement: Yup.string(),
     }),
   });
+
 </script>
 
 <template>

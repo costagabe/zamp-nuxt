@@ -35,7 +35,7 @@
       name="address.number"
     >
       <u-input
-        v-model="state.number"
+        v-model.number="state.number"
         :loading="loading"
       />
     </u-form-group>

@@ -15,7 +15,7 @@
     :cols="cols"
     name=""
     title="Clientes"
-    api-list-route=""
+    api-list-route="clients"
     update-route="UpdateClient"
     create-route="CreateClient"
   >
