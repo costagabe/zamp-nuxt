@@ -1,14 +1,11 @@
 <template>
   <NuxtLayout>
     <NuxtLoadingIndicator
-        :height="5"
-        :throttle="0"
+      :height="5"
+      :throttle="0"
     />
-    <NuxtPage />
+    <nuxt-page />
   </NuxtLayout>
 </template>
-<style>
-
-</style>
-<script setup lang="ts">
-</script>
+<style></style>
+<script setup lang="ts"></script>

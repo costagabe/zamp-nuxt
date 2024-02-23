@@ -18,6 +18,7 @@
         <div class="container flex flex-shrink flex-col">
           <div class="flex flex-col items-center">
             <slot />
+            
           </div>
         </div>
       </div>

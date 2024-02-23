@@ -65,7 +65,6 @@ const menuMap: Record<MenuEnum, MenuCategoryEnum> = {
 };
 
 export function generateMenuStructure(userMenus: Array<MenuEnum>) {
-  console.log(userMenus);
   
   const menuStructureResponse: Record<MenuCategoryEnum, Array<MenuProps>> = {
     [MenuCategoryEnum.GENERAL]: [],

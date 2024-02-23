@@ -46,7 +46,6 @@
     const errors = [];
     if (!state.username) errors.push({ path: "username", message: "Campo Obrigatório" });
     if (!state.password) errors.push({ path: "password", message: "Campo Obrigatório" });
-    console.log(errors);
 
     return errors;
   };
