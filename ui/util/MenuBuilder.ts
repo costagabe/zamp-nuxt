@@ -65,6 +65,8 @@ const menuMap: Record<MenuEnum, MenuCategoryEnum> = {
 };
 
 export function generateMenuStructure(userMenus: Array<MenuEnum>) {
+  console.log(userMenus);
+  
   const menuStructureResponse: Record<MenuCategoryEnum, Array<MenuProps>> = {
     [MenuCategoryEnum.GENERAL]: [],
     [MenuCategoryEnum.SYSTEM]: [],
@@ -74,7 +76,9 @@ export function generateMenuStructure(userMenus: Array<MenuEnum>) {
 
   userMenus.forEach((menu) => {
     if (menuMap[menu]) {
-      menuStructureResponse[menuMap[menu]] = Object.keys(menuStructure[menuMap[menu]]).map(
+      menuStructureResponse[menuMap[menu]] = Object.keys(menuStructure[menuMap[menu]])
+      .filter((key) => userMenus.includes(key as MenuEnum))
+      .map(
         (key) => menuStructure[menuMap[menu]][key as MenuEnum] as MenuProps
       );
     }
