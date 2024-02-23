@@ -82,7 +82,7 @@ export function generateMenuStructure(userMenus: Array<MenuEnum>) {
 
   const arrays = Object.keys(menuStructureResponse).map(
     (key) => menuStructureResponse[key as MenuCategoryEnum]
-  );
+  ).filter((menu) => menu.length);
 
   return arrays;
 }
