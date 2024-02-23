@@ -4,7 +4,7 @@
   import type { TableColumn } from "~/ui/types/DataTableTypes";
   import type { Page } from "~/ui/types/PaginationTypes";
   import type { DropdownItem } from "#ui/types";
-
+  
   type CrudListProps = {
     cols: Array<TableColumn>;
     name: string;
@@ -29,7 +29,7 @@
     size: route.query.size ?? "10",
   }));
 
-  const { data, status, refresh } = useAsyncData(
+  const { data, status, error, refresh } = useAsyncData(
     props.name,
     () => $fetch<Page<T>>(`/api/${props.apiListRoute}`, { query: paginationQuery.value }),
     {
@@ -41,6 +41,19 @@
         }) as Page<T>,
     }
   );
+
+  const toast = useToast();
+
+  watch(error, (value) => {
+    if (value?.data) {
+      const data = value.data as ApiError;
+
+      toast.add({
+        title: data.title,
+        color: "red",
+      });
+    }
+  });
 
   watch(
     status,

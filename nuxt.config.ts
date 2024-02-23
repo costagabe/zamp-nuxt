@@ -33,7 +33,7 @@ export default defineNuxtConfig({
     pages: "./ui/pages",
     assets: "./ui/assets",
     layouts: "./ui/layouts",
-    plugins: "./ui/plugins",
+    plugins: "./plugins",
     middleware: "./ui/middleware",
   },
 });
