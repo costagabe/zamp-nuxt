@@ -97,3 +97,9 @@
     </div>
   </div>
 </template>
+
+<style>
+  thead > tr:hover {
+    background-color: rfb(var(--color-primary-800)) !important;
+  }
+</style>

@@ -5,13 +5,17 @@
 
   const cols: Array<TableColumn> = [
     { label: "Tipo da transação", key: "type", class: "w-40" },
-    { label: "Conta", key: "classificationAccountName" },
-    { label: "Valor (R$)", key: "value" },
+    { label: "Conta", key: "classificationAccountName", class: "w-40"},
+    { label: "Valor (R$)", key: "value", class: "w-28 text-center" },
     { label: "Descrição", key: "history" },
     { label: "Data", key: "date" },
   ];
 
   const route = useRoute();
+
+  function getCurrencyClass(type: string) {
+    return `text-right w-full ${type === "IN" ? "text-green-500" : "text-red-500"}`;
+  }
 </script>
 
 <template>
@@ -42,7 +46,16 @@
       </div>
     </template>
     <template #value-data="{ row }">
-      {{ toCurrency(row.value) }}
+      <div :class="getCurrencyClass(row.type)">
+        <u-badge
+          :color="row.type === 'IN' ? 'emerald' : row.type === 'TRANSFER' ? 'blue' : 'red'"
+          class="w-24 text-center justify-center"
+          variant="subtle"
+          size="lg"
+        >
+        {{ toCurrency(row.value) }}
+        </u-badge>
+      </div>
     </template>
     <template #type-data="{ row }">
       <accounts-entries-badge :type="row.type" />

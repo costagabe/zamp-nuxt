@@ -47,7 +47,6 @@
   const schema = object<UpdateUserForm>().shape({
     name: string().trim().min(5, "Preencha o nome completo").required("Campo Obrigatório"),
     level: number()
-      // .max(level.value!, "Você não pode criar um perfil com o nível maior que o seu.")
       .required("Campo Obrigatório"),
   });
 

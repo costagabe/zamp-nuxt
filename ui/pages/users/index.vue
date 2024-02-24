@@ -7,7 +7,7 @@
     { label: "Nome", key: "name" },
     { label: "Email", key: "email" },
     { label: "Perfil", key: "profile" },
-    { label: "Situação", key: "situation", class: "text-center" },
+    { label: "Situação", key: "situation", class: "text-center w-24" },
   ];
 </script>
 
@@ -25,6 +25,7 @@
         <u-badge
           :color="row.situation === 'ACTIVE' ? 'emerald' : 'red'"
           :label="row.situation === 'ACTIVE' ? 'Ativo' : 'Inativo'"
+          class="w-full justify-center"
           variant="subtle"
         >
           {{ row.situation === "ACTIVE" ? "Ativo" : "Inativo" }}

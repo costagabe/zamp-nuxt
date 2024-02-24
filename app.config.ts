@@ -8,9 +8,11 @@ export default defineAppConfig({
     },
     table: {
       td: {
-        padding: "py-2",
-      }
-    }
-    
+        padding: "py-1",
+      },
+      tr: {
+        base: "hover:bg-sambuca-800",
+      },
+    },
   },
 });
