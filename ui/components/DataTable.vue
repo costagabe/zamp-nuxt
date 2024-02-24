@@ -16,6 +16,8 @@
   const router = useRouter();
   const props = defineProps<TableProps>();
   const emits = defineEmits(["delete"]);
+  const showDeleteModal = ref(false);
+  let id = "";
 
   const { loading } = storeToRefs(useAppStore());
 
@@ -42,11 +44,8 @@
           label: "Apagar",
           icon: "i-heroicons-trash-20-solid",
           click: async () => {
-            try {
-              await $fetch(`/api/${props.apiListRoute}/${row.id}`, { method: "DELETE" });
-            } finally {
-              emits("delete");
-            }
+            showDeleteModal.value = true;
+            id = row.id;
           },
         },
       ],
@@ -61,9 +60,23 @@
     }
     return menus;
   };
+
+  async function onDelete() {
+    try {
+      loading.value = true;
+      await $fetch(`/api/${props.apiListRoute}/${id}`, { method: "DELETE" });
+    } finally {
+      emits("delete");
+      loading.value = false;
+    }
+  }
 </script>
 
 <template>
+  <confirm-modal
+    v-model="showDeleteModal"
+    @confirm="onDelete"
+  />
   <div class="overflow-x-auto">
     <u-table
       :columns="cols"

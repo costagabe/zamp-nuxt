@@ -4,11 +4,10 @@
   definePageMeta({ name: "Entries" });
 
   const cols: Array<TableColumn> = [
-    { label: "Tipo da transação", key: "type", class: "w-40" },
+    { label: "Data", key: "date" , class: "w-40"},
     { label: "Conta", key: "classificationAccountName", class: "w-40"},
     { label: "Valor (R$)", key: "value", class: "w-28 text-center" },
     { label: "Descrição", key: "history" },
-    { label: "Data", key: "date" },
   ];
 
   const route = useRoute();
