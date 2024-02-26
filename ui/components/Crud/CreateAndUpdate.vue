@@ -32,7 +32,7 @@
 
   const { data, error } = useAsyncData(
     `${props.name}UpdateData`,
-    () => $fetch<T>(`/api/${props.apiRoute}/${id.value}`),
+    () => $fetch<T>(`/server-api/${props.apiRoute}/${id.value}`),
     { default: () => props.defaultUpdateValue as T, watch: [id], immediate: !!id.value }
   );
 
@@ -54,7 +54,7 @@
     try {
       loading.value = true;
 
-      await $fetch(`/api/${props.apiRoute}`, {
+      await $fetch(`/server-api/${props.apiRoute}`, {
         method: "POST",
         body: event.data,
       });
@@ -79,7 +79,7 @@
     try {
       loading.value = true;
 
-      await $fetch(`/api/${props.apiRoute}/${id.value}`, {
+      await $fetch(`/server-api/${props.apiRoute}/${id.value}`, {
         method: "PUT",
         body: event.data,
       });

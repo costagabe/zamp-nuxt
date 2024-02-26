@@ -38,7 +38,7 @@
   const { data: classificationAccounts } = useAsyncData<SelectOption[]>(
     "classificationAccounts",
     () =>
-      $fetch<SelectOption[]>("/api/accounts/select-list", {
+      $fetch<SelectOption[]>("/server-api/accounts/select-list", {
         query: { type: type.value, accountId: route.params.id },
       }),
     { default: () => [], watch: [type] }

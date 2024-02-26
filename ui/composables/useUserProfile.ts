@@ -8,7 +8,7 @@ export function useUserProfile() {
 
   const { data: userProfileList, status: userProfileListStatus } = useAsyncData(
     "userProfileSelectList",
-    () => $fetch<Array<SelectOption>>("/api/user-profiles/select-list"),
+    () => $fetch<Array<SelectOption>>("/server-api/user-profiles/select-list"),
     {
       default: () => [] as Array<SelectOption>,
     }
@@ -16,7 +16,7 @@ export function useUserProfile() {
 
   const { data: userProfilePermissions, status: userProfilePermissionsStatus } = useAsyncData(
     "userProfilePermissionList",
-    () => $fetch<Array<PermissionDTO>>("/api/user-profiles/permission-list"),
+    () => $fetch<Array<PermissionDTO>>("/server-api/user-profiles/permission-list"),
     {
       watch: [shouldFetchPermission],
       default: () => [] as Array<PermissionDTO>,

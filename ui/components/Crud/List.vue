@@ -31,7 +31,7 @@
 
   const { data, status, error, refresh } = useAsyncData(
     props.name,
-    () => $fetch<Page<T>>(`/api/${props.apiListRoute}`, { query: paginationQuery.value }),
+    () => $fetch<Page<T>>(`/server-api/${props.apiListRoute}`, { query: paginationQuery.value }),
     {
       watch: [paginationQuery],
       default: () =>

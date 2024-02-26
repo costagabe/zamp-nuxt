@@ -64,7 +64,7 @@
   async function onDelete() {
     try {
       loading.value = true;
-      await $fetch(`/api/${props.apiListRoute}/${id}`, { method: "DELETE" });
+      await $fetch(`/server-api/${props.apiListRoute}/${id}`, { method: "DELETE" });
     } finally {
       emits("delete");
       loading.value = false;

@@ -4,9 +4,9 @@ export default defineNuxtConfig({
     server: {
       // host: "localhost.tokiomarine.com.br",
       proxy: {
-        "/api": {
+        "/server-api": {
           target: "http://localhost:8080",
-          rewrite: (path) => path.replace(/\/api/, ""),
+          rewrite: (path) => path.replace(/\/server-api/, ""),
           changeOrigin: true,
         },
       },
@@ -27,6 +27,7 @@ export default defineNuxtConfig({
       "./ui/types",
       "./ui/validators",
       "./ui/services",
+      "./server/config",
     ],
   },
   dir: {
