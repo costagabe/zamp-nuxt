@@ -2,7 +2,7 @@
   const props = defineProps<{
     filePrefixName: string;
     disabled: boolean;
-    fileName: string;
+    fileName: string | null;
   }>();
 
   const emit = defineEmits<{ (e: "uploadSuccess", value: string): void; (e: "delete"): void }>();
@@ -24,8 +24,6 @@
     });
 
   async function handleInput(event: Event) {
-    console.log("handleInput");
-    
     const target = event.target as HTMLInputElement;
     const file = target?.files?.[0] as File;
 

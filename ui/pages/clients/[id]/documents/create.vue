@@ -8,7 +8,6 @@
     publicPath: string;
   };
 
-  const toast = useToast();
   const route = useRoute();
 
   const defaultState: CreateClientDocumentProps = {
@@ -19,27 +18,10 @@
 
   const state = ref<CreateClientDocumentProps>({ ...defaultState });
 
-  const { loading } = storeToRefs(useAppStore());
-  const bucketFileName = ref<string>("");
-
-  const filePrefixName = computed(() => bucketFileName.value || `${route.params.id}-${state.value.name}`);
-
-  const fileName = computed(() => state.value.publicPath.split("/").pop()! ?? null);
-
   const schema = object<CreateClientDocumentProps>().shape({
     name: string().required("Campo Obrigatório"),
     type: string().oneOf(["PERSON", "BUILDING", "RENT"]).required("Campo Obrigatório"),
   });
-
-  function handleUploadSuccess(publicPath: string) {
-    state.value.publicPath = publicPath;
-    bucketFileName.value = publicPath.split("/").pop()!;
-  }
-
-  function handleDelete() {
-    state.value.publicPath = "";
-    bucketFileName.value = "";
-  }
 </script>
 
 <template>
@@ -53,34 +35,6 @@
     name="ClientDocuments"
     backRoute="ClientDocuments"
   >
-    <u-form-group
-      label="Nome"
-      name="name"
-    >
-      <u-input
-        v-model="state.name"
-        :loading="loading"
-        placeholder="Ex. RG, CPF, CNH"
-      />
-    </u-form-group>
-    <u-form-group
-      label="Arquivo"
-      name="file"
-    >
-      <file-upload-input
-        :disabled="!state.name"
-        :file-prefix-name="filePrefixName"
-        :file-name="fileName"
-        @upload-success="handleUploadSuccess"
-        @delete="handleDelete"
-      />
-
-      <!-- <u-input
-        :loading="loading"
-        @input="handleInput"
-        ref="fileRef"
-        type="file"
-      /> -->
-    </u-form-group>
+    <clients-documents-form v-model:state="state" />
   </crud-create-and-update>
 </template>

@@ -2,47 +2,26 @@
   import { object, string } from "yup";
 
   definePageMeta({ name: "UpdateClientDocument" });
-  type CreateClientDocumentProps = {
+  type UpdateClientDocumentProps = {
     name: string;
     type: "PERSON" | "BUILDING" | "RENT";
     publicPath: string;
   };
 
-  const toast = useToast();
   const route = useRoute();
 
-  const defaultState: CreateClientDocumentProps = {
+  const defaultState: UpdateClientDocumentProps = {
     name: "",
     type: "PERSON",
     publicPath: "",
   };
 
-  const state = ref<CreateClientDocumentProps>({ ...defaultState });
+  const state = ref<UpdateClientDocumentProps>({ ...defaultState });
 
-  const { loading } = storeToRefs(useAppStore());
-  const bucketFileName = ref<string>("");
-
-  const filePrefixName = computed(() => bucketFileName.value || `${route.params.id}-${state.value.name}`);
-
-  const fileName = computed(() => state.value.publicPath.split("/").pop()! ?? null);
-
-  const schema = object<CreateClientDocumentProps>().shape({
+  const schema = object<UpdateClientDocumentProps>().shape({
     name: string().required("Campo Obrigatório"),
     type: string().oneOf(["PERSON", "BUILDING", "RENT"]).required("Campo Obrigatório"),
   });
-
-  function handleUploadSuccess(publicPath: string) {
-    state.value.publicPath = publicPath;
-    bucketFileName.value = publicPath.split("/").pop()!;
-  }
-
-  function handleDelete() {
-    console.log("deleting");
-    
-    state.value.publicPath = "";
-    bucketFileName.value = "";
-    // fileKey.value++;
-  }
 </script>
 
 <template>
@@ -56,28 +35,6 @@
     name="ClientDocuments"
     backRoute="ClientDocuments"
   >
-    <u-form-group
-      label="Nome"
-      name="name"
-    >
-      <u-input
-        v-model="state.name"
-        :loading="loading"
-        placeholder="Ex. RG, CPF, CNH"
-      />
-    </u-form-group>
-    <u-form-group
-      label="Arquivo"
-      name="file"
-    >
-    <file-upload-input
-        :disabled="!state.name"
-        :file-prefix-name="filePrefixName"
-        :file-name="fileName"
-        @upload-success="handleUploadSuccess"
-        @delete="handleDelete"
-      />
-
-    </u-form-group>
+  <clients-documents-form v-model:state="state" />
   </crud-create-and-update>
 </template>
