@@ -2,6 +2,7 @@
   import { object, string } from "yup";
 
   definePageMeta({ name: "UpdateClientDocument" });
+
   type UpdateClientDocumentProps = {
     name: string;
     type: "PERSON" | "BUILDING" | "RENT";
@@ -35,6 +36,6 @@
     name="ClientDocuments"
     backRoute="ClientDocuments"
   >
-  <clients-documents-form v-model:state="state" />
+    <clients-documents-form v-model:state="state" />
   </crud-create-and-update>
 </template>

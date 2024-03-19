@@ -4,7 +4,7 @@
       :height="5"
       :throttle="0"
     />
-    <nuxt-page />
+    <NuxtPage />
   </NuxtLayout>
 </template>
 <style></style>

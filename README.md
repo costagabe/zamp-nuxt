@@ -73,3 +73,11 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+Recursos faltantes:
+
+- Cadastro de imóveis
+- Cadastro de aluguéis
+- Integração de boletos de aluguéis
+- Integração de boletos pagos com livro caixa
+- Integração com geração de contratos base

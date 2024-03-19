@@ -5,10 +5,7 @@
 
   const route = useRoute();
 
-  const cols: Array<TableColumn> = [
-    { label: "Nome", key: "name" },
-    { label: "type", key: "type" },
-  ];
+  const cols: Array<TableColumn> = [{ label: "Nome", key: "name" }];
 </script>
 
 <template>

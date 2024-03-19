@@ -8,7 +8,6 @@
   const toast = useToast();
   const route = useRoute();
 
-
   const { loading } = storeToRefs(useAppStore());
   const bucketFileName = ref<string>("");
 
@@ -40,12 +39,14 @@
   </u-form-group>
   <u-form-group
     label="Arquivo"
-    name="file"
+    name="publicPath"
+    v-slot="{ error }"
   >
     <file-upload-input
       :disabled="!state.name"
       :file-prefix-name="filePrefixName"
       :file-name="fileName"
+      :error="!!error"
       @upload-success="handleUploadSuccess"
       @delete="handleDelete"
     />

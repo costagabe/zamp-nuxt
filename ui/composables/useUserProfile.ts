@@ -25,14 +25,6 @@ export function useUserProfile() {
   );
 
   watch(
-    shouldFetchPermission,
-    (v) => {
-      console.log(v, "afasdf");
-    },
-    { immediate: true }
-  );
-
-  watch(
     () => [userProfileListStatus.value, userProfilePermissionsStatus.value],
     (status) => {
       loading.value = status.some((v) => v === "pending");

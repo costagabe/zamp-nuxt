@@ -3,6 +3,7 @@
     filePrefixName: string;
     disabled: boolean;
     fileName: string | null;
+    error: boolean;
   }>();
 
   const emit = defineEmits<{ (e: "uploadSuccess", value: string): void; (e: "delete"): void }>();
@@ -12,6 +13,8 @@
 
   const file = ref();
   const internalFileLink = ref<string | null>(null);
+
+  const inputColor = computed(() => (props.error ? "red-400" : "sambuca-600"));
 
   const realFileName = computed(() => props.fileName || internalFileLink.value);
 
@@ -64,9 +67,9 @@
   }
 
   function handleInputClick() {
-    if(!realFileName.value) {
+    if (!realFileName.value) {
       file.value.click();
-    } 
+    }
   }
 </script>
 
@@ -80,15 +83,13 @@
       type="file"
     />
     <div
-      class="flex items-center justify-center w-full h-32 cursor-pointer rounded-lg border border-sambuca-600"
+      :class="`flex items-center justify-center w-full h-32 cursor-pointer rounded-lg border border-${inputColor}`"
     >
       <div
         v-if="realFileName"
         class="flex justify-between w-full px-4"
       >
-        <p>
-          {{ props.filePrefixName }}
-        </p>
+        <p>{{ props.filePrefixName }}</p>
         <div class="grid grid-cols-2 gap-2">
           <u-button @click="downloadFile">
             <u-icon name="i-heroicons-arrow-down-tray" />
@@ -103,11 +104,23 @@
       <div
         v-else
         @click="handleInputClick"
-        class="flex flex-col items-center  hover:cursor-pointer w-full h-full justify-center text-sambuca-600"
+        :class="`flex flex-col items-center  hover:cursor-pointer w-full h-full justify-center text-${inputColor}`"
       >
-        <u-icon v-if="!disabled" name="i-heroicons-plus" class="text-5xl" />
-        <u-icon v-else name="i-heroicons-no-symbol" class="text-5xl" />
-        <span v-if="!disabled" class="mt-2 text-base leading-normal">Clique para adicionar um arquivo</span>
+        <u-icon
+          v-if="!disabled"
+          name="i-heroicons-plus"
+          class="text-5xl"
+        />
+        <u-icon
+          v-else
+          name="i-heroicons-no-symbol"
+          class="text-5xl"
+        />
+        <span
+          v-if="!disabled"
+          class="mt-2 text-base leading-normal"
+          >Clique para adicionar um arquivo</span
+        >
       </div>
     </div>
   </div>
