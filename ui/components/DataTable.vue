@@ -14,8 +14,10 @@
 
   const route = useRoute();
   const router = useRouter();
+
   const props = defineProps<TableProps>();
-  const emits = defineEmits(["delete"]);
+  const emit = defineEmits(["delete"]);
+
   const showDeleteModal = ref(false);
   let id = "";
 
@@ -66,17 +68,13 @@
       loading.value = true;
       await $fetch(`/server-api/${props.apiListRoute}/${id}`, { method: "DELETE" });
     } finally {
-      emits("delete");
+      emit("delete");
       loading.value = false;
     }
   }
 </script>
 
 <template>
-  <confirm-modal
-    v-model="showDeleteModal"
-    @confirm="onDelete"
-  />
   <div class="overflow-x-auto">
     <u-table
       :columns="cols"
@@ -85,13 +83,12 @@
       :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: 'Carregando...' }"
     >
       <template #id-data="{ row }">
-        <u-dropdown :items="items(row)">
-          <u-button
-            color="gray"
-            variant="ghost"
-            icon="i-heroicons-ellipsis-horizontal-20-solid"
-          />
-        </u-dropdown>
+        <data-table-menu
+          :id-route-name
+          :update-route
+          :api-list-route
+          :row
+        />
       </template>
 
       <template

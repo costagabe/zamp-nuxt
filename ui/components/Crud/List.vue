@@ -17,6 +17,7 @@
   };
 
   const props = withDefaults(defineProps<CrudListProps>(), { idRouteName: "id" });
+  const emit = defineEmits(["delete"]);
 
   const slots = useSlots();
 
@@ -64,6 +65,11 @@
   );
 
   const hasHeader = computed(() => slots.header !== undefined);
+
+  function handleDelete(){
+    emit("delete")
+    refresh();
+  }
 </script>
 
 <template>
@@ -89,7 +95,7 @@
           :columns="cols"
           :menus="menus"
           :update-route="updateRoute"
-          @delete="refresh"
+          @delete="handleDelete"
         >
           <template
             v-for="(_, name) in $slots"
