@@ -12,66 +12,14 @@
     menus?: Array<DropdownItem & { show?(row: T): boolean }>;
   };
 
-  const route = useRoute();
-  const router = useRouter();
-
   const props = defineProps<TableProps>();
   const emit = defineEmits(["delete"]);
-
-  const showDeleteModal = ref(false);
-  let id = "";
 
   const { loading } = storeToRefs(useAppStore());
 
   const cols = computed(() => [...props.columns, { label: "Ações", key: "id", class: "w-[80px]" }]);
 
   const [paginationModel] = defineModel<Pagination>("pagination");
-
-  const items = (row: T) => {
-    const menus: Array<Array<DropdownItem>> = [
-      [
-        {
-          label: "Editar",
-          icon: "i-heroicons-pencil-square-20-solid",
-          click: () => {
-            router.push({
-              name: props.updateRoute,
-              params: { ...route.params, [props.idRouteName]: row.id },
-            });
-          },
-        },
-      ],
-      [
-        {
-          label: "Apagar",
-          icon: "i-heroicons-trash-20-solid",
-          click: async () => {
-            showDeleteModal.value = true;
-            id = row.id;
-          },
-        },
-      ],
-    ];
-
-    if (props.menus && props.menus?.find((menu) => menu.show?.(row) ?? true)) {
-      menus.splice(
-        1,
-        0,
-        props.menus.map((v) => ({ ...v, click: () => v.click!(row) }))
-      );
-    }
-    return menus;
-  };
-
-  async function onDelete() {
-    try {
-      loading.value = true;
-      await $fetch(`/server-api/${props.apiListRoute}/${id}`, { method: "DELETE" });
-    } finally {
-      emit("delete");
-      loading.value = false;
-    }
-  }
 </script>
 
 <template>
@@ -83,11 +31,21 @@
       :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: 'Carregando...' }"
     >
       <template #id-data="{ row }">
-        <data-table-menu
+        <slot
+          name="data-table-menu"
           :id-route-name
           :update-route
           :api-list-route
           :row
+        />
+
+        <data-table-menu
+          v-if="!$slots['data-table-menu']"
+          :id-route-name
+          :update-route
+          :api-list-route
+          :row
+          @delete="() => emit('delete')"
         />
       </template>
 

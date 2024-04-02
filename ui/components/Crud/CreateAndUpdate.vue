@@ -63,9 +63,11 @@
         title: "Formulário enviado com sucesso",
         color: "emerald",
       });
+
       if (props.resetOnSubmit) {
         state.value = { ...props.defaultUpdateValue };
       }
+      
       emit("submit");
     } catch (e) {
       const error = e as FetchError<ApiError>;
