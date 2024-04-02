@@ -1,3 +1,8 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "vue.inlayHints.inlineHandlerLeading": true,
+    "vue.inlayHints.missingProps": true,
+    "vue.inlayHints.optionsWrapper": true,
+    "vue.inlayHints.vBindShorthand": true,
+    "npm.packageManager": "bun"
 }
