@@ -4,6 +4,7 @@
   type UpdateEntryProps = EntryDTO;
 
   definePageMeta({ name: "UpdateEntry" });
+  useHead({ title: "Alterar Entrada" });
 
   const defaultState: UpdateEntryProps = {
     history: "",

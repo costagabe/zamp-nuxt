@@ -5,6 +5,7 @@
   type CreateClientForm = ClientDTO;
 
   definePageMeta({ name: "CreateClient" });
+  useHead({ title: "Novo Cliente" });
 
   const defaultState: CreateClientForm = {
     name: "",

@@ -7,6 +7,7 @@
   };
 
   definePageMeta({ name: "CreateUserProfile" });
+  useHead({ title: "Novo Perfil de Usuário" });
 
   const defaultState: CreateUserForm = {
     name: "",

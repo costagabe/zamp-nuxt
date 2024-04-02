@@ -2,6 +2,7 @@
   import type { TableColumn } from "~/ui/types/DataTableTypes";
 
   definePageMeta({ name: "Entries" });
+  useHead({ title: "Entradas" });
 
   const cols: Array<TableColumn> = [
     { label: "Data", key: "date" , class: "w-40"},

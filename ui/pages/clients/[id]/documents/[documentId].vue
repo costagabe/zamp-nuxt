@@ -2,6 +2,7 @@
   import { object, string } from "yup";
 
   definePageMeta({ name: "UpdateClientDocument" });
+  useHead({ title: "Alterar Documento do Cliente" });
 
   type UpdateClientDocumentProps = {
     name: string;

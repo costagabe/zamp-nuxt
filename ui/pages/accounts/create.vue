@@ -5,6 +5,7 @@
   type CreateAccountProps = AccountDTO;
 
   definePageMeta({ name: "CreateAccount" });
+  useHead({ title: "Nova Conta" });
 
   const defaultState: CreateAccountProps = {
     name: "",

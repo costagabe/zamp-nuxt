@@ -5,6 +5,7 @@
   type UpdateAccountProps = AccountDTO;
 
   definePageMeta({ name: "UpdateAccount" });
+  useHead({ title: "Alterar Conta" });
 
   const defaultState: UpdateAccountProps = {
     name: "",

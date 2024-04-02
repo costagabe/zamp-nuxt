@@ -10,6 +10,7 @@
   };
 
   definePageMeta({ name: "UpdateUser" });
+  useHead({ title: "Alterar Usuário" });
 
   const defaultState: UpdateUserForm = {
     id: "",

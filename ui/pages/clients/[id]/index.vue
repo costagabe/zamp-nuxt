@@ -4,6 +4,7 @@
   type UpdateClientForm = ClientDTO;
 
   definePageMeta({ name: "UpdateClient" });
+  useHead({ title: "Alterar Cliente" });
 
 
   const defaultState: UpdateClientForm = {

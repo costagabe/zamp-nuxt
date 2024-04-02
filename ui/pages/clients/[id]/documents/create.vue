@@ -2,6 +2,8 @@
   import { object, string } from "yup";
 
   definePageMeta({ name: "CreateClientDocument" });
+  useHead({ title: "Novo Cliente" });
+
   type CreateClientDocumentProps = {
     name: string;
     type: "PERSON" | "BUILDING" | "RENT";

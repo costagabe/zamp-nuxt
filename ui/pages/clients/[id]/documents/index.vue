@@ -2,6 +2,7 @@
   import type { TableColumn } from "~/ui/types/DataTableTypes";
 
   definePageMeta({ name: "ClientDocuments" });
+  useHead({ title: "Documentos do Cliente" });
 
   const route = useRoute();
 

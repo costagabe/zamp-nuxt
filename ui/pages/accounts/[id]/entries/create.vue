@@ -4,6 +4,7 @@
   type CreateEntryProps = EntryDTO;
 
   definePageMeta({ name: "CreateEntry" });
+  useHead({ title: "Nova Entrada" });
 
   const route = useRoute();
 

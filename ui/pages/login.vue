@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import type { FormError, FormSubmitEvent } from "#ui/types";
 
-  definePageMeta({ layout: "auth", title: "Login" });
+  definePageMeta({ layout: "auth" });
+  useHead({ title: "Login" });
 
   const authStore = useAuthStore();
   const { form: formState } = storeToRefs(authStore);

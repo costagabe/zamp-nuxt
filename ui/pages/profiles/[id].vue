@@ -10,6 +10,7 @@
   };
 
   definePageMeta({ name: "UpdateUserProfile" });
+  useHead({ title: "Alterar Perfil de Usuário" });
 
   const defaultState: UpdateUserForm = {
     id: "",

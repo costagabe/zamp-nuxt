@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  useHead({ title: "Parâmetros" });
+</script>
 
 <template>
   <div class="container mx-auto w-10/12">
